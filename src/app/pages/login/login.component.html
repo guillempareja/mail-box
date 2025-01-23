@@ -1,0 +1,33 @@
+<form class="box" [formGroup]="form">
+  <h2>Acceso</h2>
+
+  <div class="grid-template auto">
+    <!-- User -->
+    <sdss-text-input
+      class="new-sdss col-12"
+      label="Usuario"
+      type="text"
+      placeholder="Introduce tu usuario"
+      [invalid]="form | isInvalidControl: 'username'"
+      invalid-text="Campo obligatorio"
+      [value]="form.get('username')?.value"
+      formControlName="username"
+    />
+
+    <!-- Password -->
+    <sdss-text-input
+      class="new-sdss col-12"
+      label="Contraseña"
+      type="password"
+      placeholder="Introduce tu contraseña"
+      [invalid]="form | isInvalidControl: 'password'"
+      invalid-text="Campo obligatorio"
+      [value]="form.get('password')?.value"
+      formControlName="password"
+    />
+  </div>
+
+  <sdss-button (click)="login()" kind="primary" class="new-sdss long">
+    Acceder
+  </sdss-button>
+</form>

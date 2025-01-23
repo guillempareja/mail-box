@@ -1,0 +1,15 @@
+@use '../../../styles/base/variables' as *;
+@use '../../../styles/utils/index' as *;
+
+:host {
+  @include flex-center;
+}
+
+.box {
+  @include flex-center;
+  flex-direction: column;
+}
+
+sdss-button.long {
+  margin-top: $spacing-md;
+}

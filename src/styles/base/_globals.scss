@@ -1,0 +1,75 @@
+@use 'variables' as *;
+@use '../utils/index' as *;
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  color: $color-basic-black;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+h1 {
+  color: $color-basic-black;
+  font-size: rem(24);
+  font-weight: 600;
+  line-height: rem(28.5);
+  margin-bottom: $spacing-2xl;
+}
+
+h2 {
+  color: $color-primary-500;
+  font-size: rem(20);
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: $spacing-md;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+input {
+  color: $color-basic-black;
+}
+
+textarea {
+  @include sdss-focus;
+  min-height: rem(265);
+  padding: $spacing-xs;
+  border-radius: var(--otd-radius-md);
+  border: 1px solid var(--cds-color-border-01);
+  background-color: var(--otd-color-textual-basic-light);
+
+  &:focus {
+    border: 1px solid var(--otd-color-primary-500);
+  }
+}
+
+sdss-textarea {
+  margin: 0;
+}

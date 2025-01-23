@@ -1,0 +1,88 @@
+@use '../base/variables' as *;
+
+@mixin breakpoint($device) {
+  @if map-has-key($breakpoints, $device) {
+    @media (max-width: map-get($breakpoints, $device)) {
+      @content;
+    }
+  } @else {
+    @warn "The breakpoint `#{$device}` is not defined in the breakpoints map.";
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin spin {
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  animation: spin 1s linear infinite;
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin fadeIn($duration: $transition-speed, $easing: ease-in-out) {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  animation: fadeIn $duration $easing;
+}
+
+@mixin line-clamp($lines: 5) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: max-height $transition-speed ease;
+}
+
+@mixin flex-wrap($gap: $spacing-xs) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+  align-items: end;
+}
+
+@mixin box {
+  border-radius: $border-radius-md;
+  border: 1px solid $color-primary-150;
+  padding: $spacing-lg $spacing-md;
+}
+
+%focus-styles {
+  box-shadow: var(--otd-focus-shadow);
+  -webkit-box-shadow: var(--otd-focus-shadow);
+}
+
+@mixin sdss-focus($use-focus-visible: false) {
+  outline: none;
+
+  @if $use-focus-visible == true {
+    &:focus-visible {
+      @extend %focus-styles;
+    }
+  } @else {
+    &:focus {
+      @extend %focus-styles;
+    }
+  }
+}

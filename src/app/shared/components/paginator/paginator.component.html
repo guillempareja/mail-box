@@ -1,0 +1,8 @@
+@if (totalItems() > itemsPerPage()) {
+  <p-paginator
+    [rows]="itemsPerPage()"
+    [totalRecords]="totalItems()"
+    [first]="(currentPage() - 1) * itemsPerPage()"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+}

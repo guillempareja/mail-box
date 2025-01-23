@@ -1,0 +1,156 @@
+@use '../../../../styles/base/variables' as *;
+@use '../../../../styles/utils/index' as *;
+
+.header-container {
+  width: 100%;
+  display: flex;
+  gap: $spacing-xs;
+  justify-content: space-between;
+  align-items: center;
+
+  @include breakpoint('phone') {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  .text-block {
+    display: block;
+    font-weight: bold;
+
+    label {
+      text-decoration: underline;
+    }
+
+    sdss-tag {
+      margin-left: $spacing-xs;
+    }
+  }
+
+  .categories {
+    @include flex-wrap;
+    align-items: center;
+  }
+
+  .tag-block {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+
+    label {
+      font-weight: bold;
+    }
+  }
+}
+
+.user-block {
+  flex-shrink: 0;
+}
+
+.sentiment-block {
+  display: flex;
+  gap: $spacing-5xs;
+  align-items: center;
+
+  &.neutral {
+    color: $color-warning-500;
+  }
+
+  &.positive {
+    color: $color-success-500;
+  }
+
+  &.negative {
+    color: $color-error-500;
+  }
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  padding-inline: $spacing-md;
+  margin-top: $spacing-2xs;
+
+  @include breakpoint('phone') {
+    padding-inline: 0;
+  }
+}
+
+.box .content-container {
+  margin-top: $spacing-xl;
+}
+
+.metadata-block {
+  display: flex;
+  gap: $spacing-6xl;
+
+  @include breakpoint('phone') {
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  .date {
+    flex-shrink: 0;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xs;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .value {
+      color: $color-neutral-600;
+    }
+  }
+}
+
+.tab-block {
+  margin-top: $spacing-sm;
+}
+
+.description-block {
+  margin-top: $spacing-xs;
+
+  .description {
+    white-space: pre-line;
+  }
+
+  .see-more {
+    margin-top: $spacing-3xs;
+  }
+
+  .feedback-block {
+    margin-top: $spacing-lg;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    align-items: end;
+
+    .buttons {
+      display: flex;
+      gap: $spacing-3xs;
+    }
+
+    sdss-button[kind='primary'].positive {
+      pointer-events: none;
+    }
+  }
+}
+
+.actions-block {
+  margin-top: $spacing-4xl;
+
+  .default-actions {
+    @include flex-wrap;
+    justify-content: space-between;
+  }
+}

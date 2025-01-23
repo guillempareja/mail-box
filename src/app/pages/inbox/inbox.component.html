@@ -1,0 +1,22 @@
+<filters />
+
+@if (consultations().length) {
+  <div class="consultations-list">
+    @for (item of paginatedConsultations(); track item.consultationId) {
+      <consultation [data]="item" (onFinalize)="removeConsultation($event)" />
+    }
+    <paginator
+      [totalItems]="consultations().length"
+      [itemsPerPage]="itemsPerPage"
+      [(currentPage)]="inboxService.page"
+    />
+  </div>
+} @else {
+  <div class="empty-data">
+    <div class="big-title">No hay mensajes disponibles</div>
+    <div>
+      Actualmente, no tienes mensajes en tu buzón. Por favor, revisa más tarde o
+      ajusta los filtros para ver otros resultados.
+    </div>
+  </div>
+}

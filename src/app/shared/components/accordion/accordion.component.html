@@ -1,0 +1,26 @@
+<div class="header-container" (click)="toggleOpen()">
+  @if (title()) {
+    <span class="title">{{ title() }}</span>
+  } @else {
+    <ng-content select="[title]"></ng-content>
+  }
+
+  <span
+    class="material-symbols-outlined icon"
+    [class.active]="open()"
+    tabindex="0"
+    (keydown.enter)="toggleOpen()"
+  >
+    expand_circle_down
+  </span>
+</div>
+
+@if (open()) {
+  <div class="content-container" [class.separator]="titleContentSpacer()">
+    @if (content()) {
+      {{ content() }}
+    } @else {
+      <ng-content select="[content]"></ng-content>
+    }
+  </div>
+}

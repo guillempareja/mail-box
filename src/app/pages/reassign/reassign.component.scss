@@ -1,0 +1,20 @@
+@use '../../../styles/base/variables' as *;
+@use '../../../styles/utils/index' as *;
+
+.custom-actions {
+  sdss-button.long {
+    margin-top: $spacing-md;
+  }
+}
+
+.grid-template {
+  grid-template-columns: min-content min-content;
+
+  @include breakpoint('desktop') {
+    grid-template-columns: 100%;
+  }
+
+  @include breakpoint('tablet') {
+    --dropdown-width: auto;
+  }
+}

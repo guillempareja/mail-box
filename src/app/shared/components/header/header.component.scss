@@ -1,0 +1,14 @@
+@use '../../../../styles/base/variables' as *;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  border-bottom: 1px solid $color-primary-100;
+}
+
+sdss-header {
+  width: 100%;
+  overflow: hidden;
+}

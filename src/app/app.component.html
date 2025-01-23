@@ -1,0 +1,22 @@
+<header></header>
+<main class="new-sdss">
+  @if (pageHeaderService.show()) {
+    <page-header></page-header>
+  }
+  <div [class.page-tabulation]="!!pageHeaderService.breadcrumbRoute()">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+<footer></footer>
+
+@if (loaderService.isLoading()) {
+  <global-loader></global-loader>
+}
+
+<modal
+  [(show)]="genericModalsUtilsService.isModalVisible"
+  [title]="genericModalsUtilsService.title()"
+  [text]="genericModalsUtilsService.text()"
+  [acceptOnly]="genericModalsUtilsService.acceptOnly()"
+  (onConfirm)="genericModalsUtilsService.confirmResp.resolve($event)"
+/>

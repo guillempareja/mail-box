@@ -1,0 +1,49 @@
+<!-- Backdrop overlay to block background content -->
+@if (show()) {
+  <div class="backdrop"></div>
+
+  <!-- Modal content container -->
+  <div class="modal">
+    <!-- Modal Header -->
+    <div class="header">
+      <span>
+        {{ title() }}
+      </span>
+      <span class="material-symbols-outlined icon" (click)="close()">
+        close
+      </span>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="body">
+      <div>
+        @if (text()) {
+          {{ text() }}
+        }
+        <ng-content select="[content]"></ng-content>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="footer">
+      @if (!acceptOnly()) {
+        <sdss-button
+          size="sm"
+          kind="secondary"
+          class="new-sdss"
+          (click)="close()"
+        >
+          Cancelar
+        </sdss-button>
+      }
+      <sdss-button
+        size="sm"
+        kind="primary"
+        class="new-sdss"
+        (click)="confirm()"
+      >
+        Aceptar
+      </sdss-button>
+    </div>
+  </div>
+}

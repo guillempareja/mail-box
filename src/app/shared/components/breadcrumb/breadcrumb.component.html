@@ -1,0 +1,25 @@
+<sdss-breadcrumb>
+  <!-- Iterate through routes -->
+  @for (path of route(); track $index) {
+    <!-- Last route -->
+    @if (path === route()[route().length - 1]) {
+      <sdss-breadcrumb aria-current="" class="new-sdss">
+        {{ path.text }}
+      </sdss-breadcrumb>
+    } @else if (path === route()[route().length - 2]) {
+      <!-- Second last route -->
+      <sdss-breadcrumb-link aria-previous="page">
+        <a slot="customLink" [routerLink]="path.link">
+          {{ path.text }}
+        </a>
+      </sdss-breadcrumb-link>
+    } @else {
+      <!-- Regular route -->
+      <sdss-breadcrumb-link>
+        <a slot="customLink" [routerLink]="path.link">
+          {{ path.text }}
+        </a>
+      </sdss-breadcrumb-link>
+    }
+  }
+</sdss-breadcrumb>

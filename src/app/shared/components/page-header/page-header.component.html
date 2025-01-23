@@ -1,0 +1,11 @@
+@if (pageHeaderService.show()) {
+  @if (pageHeaderService.title()) {
+    <h1>{{ pageHeaderService.title() }}</h1>
+  }
+  @if (pageHeaderService.breadcrumbRoute()) {
+    <breadcrumb
+      class="page-tabulation"
+      [route]="pageHeaderService.breadcrumbRoute()!"
+    ></breadcrumb>
+  }
+}

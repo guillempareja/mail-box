@@ -1,0 +1,36 @@
+import { ApplicationConfig, LOCALE_ID } from '@angular/core';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { routes } from './app.routes';
+import { customHttpInterceptor } from './core/http-interceptor';
+import { provideHttpCache, withHttpCacheInterceptor } from '@ngneat/cashew';
+import Aura from '@primeng/themes/aura';
+import { providePrimeNG } from 'primeng/config';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
+    }),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
+      }),
+    ),
+    provideAnimations(),
+    provideToastr({
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
+    provideHttpClient(
+      withInterceptors([withHttpCacheInterceptor(), customHttpInterceptor]),
+    ),
+    provideHttpCache(),
+    { provide: LOCALE_ID, useValue: 'es-ES' },
+  ],
+};

@@ -1,0 +1,23 @@
+@use '../styles/base/variables' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  width: 100%;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: calc($page-max-width + $spacing-xl * 2);
+  padding: $spacing-xl;
+  margin-inline: auto;
+}
+
+header {
+  flex-shrink: 0;
+}

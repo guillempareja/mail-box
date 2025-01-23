@@ -1,0 +1,44 @@
+<!-- Consult to process -->
+<consultation
+  [data]="consultation()!"
+  [accordionMode]="false"
+  applyCustomActions
+>
+  <form actions class="custom-actions" [formGroup]="form">
+    <sdss-button kind="tertiary" class="new-sdss">
+      Generar respuesta tipo
+    </sdss-button>
+    <div class="custom-text-area">
+      <div class="header">
+        <span slot="icon" class="material-symbols-outlined icon"> reply </span>
+        <span class="username">{{ consultation()?.requester }}</span>
+      </div>
+      <sdss-textarea
+        #textarea
+        class="new-sdss"
+        placeholder="Respuesta..."
+        rows="8"
+        width="100%"
+        [invalid]="form | isInvalidControl: 'answer'"
+        [value]="form.get('answer')?.value"
+        invalid-text="Campo obligatorio"
+        formControlName="answer"
+      />
+    </div>
+    <sdss-button kind="primary" class="new-sdss long" (click)="process()">
+      Enviar
+    </sdss-button>
+  </form>
+</consultation>
+
+<!-- Similar consults -->
+@if (similarConsultations().length) {
+  <div class="similar-consults-container">
+    <h2>Ver consultas similares:</h2>
+    <div class="consultations-list">
+      @for (item of similarConsultations(); track item.consultationId) {
+        <consultation [data]="item" (onFinalize)="updateConsultation($event)" />
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,13 @@
+@use '../../../styles/base/variables' as *;
+@use '../../../styles/utils/index' as *;
+
+.custom-actions {
+  .long {
+    margin-top: $spacing-md;
+  }
+}
+
+.buttons-group {
+  @include flex-wrap;
+  margin-top: $spacing-md;
+}

@@ -1,0 +1,6 @@
+@use '../../../../../styles/base/variables' as *;
+@use '../../../../../styles/utils/index' as *;
+
+.buttons-group {
+  margin-top: $spacing-lg;
+}

@@ -1,0 +1,291 @@
+@if (accordionMode()) {
+  <accordion>
+    <ng-container title *ngTemplateOutlet="header"></ng-container>
+    <ng-container content *ngTemplateOutlet="content"></ng-container>
+  </accordion>
+} @else {
+  <div class="box">
+    <ng-container title *ngTemplateOutlet="header"></ng-container>
+    <ng-container content *ngTemplateOutlet="content"></ng-container>
+  </div>
+}
+
+<!-- Header -->
+<ng-template #header>
+  <div class="header-container">
+    <div class="title-block">
+      <div class="title">
+        <div class="text-block">
+          <label>Título:</label> {{ data().title }}
+          @if (data().spam) {
+            <sdss-tag
+              class="new-sdss"
+              type="Other"
+              texto="SPAM"
+              title=""
+            ></sdss-tag>
+          }
+        </div>
+      </div>
+      <div class="categories">
+        <div class="tag-block">
+          <label> Tema: </label>
+          <sdss-tag
+            class="new-sdss"
+            type="Success"
+            [texto]="topic()"
+            [title]=""
+          ></sdss-tag>
+        </div>
+        <div class="tag-block">
+          <label> Asunto: </label>
+          <sdss-tag
+            class="new-sdss"
+            type="Success"
+            [texto]="subject()"
+            [title]=""
+          ></sdss-tag>
+        </div>
+        @if (data().topicAI_Id) {
+          <sdss-tooltip
+            title="Sugerencia"
+            body-text="Hay una sugerencia de tema"
+          >
+            <sdss-tag
+              class="new-sdss"
+              type="Warning"
+              texto="Sugerencia"
+              title=""
+            ></sdss-tag>
+          </sdss-tooltip>
+        }
+      </div>
+    </div>
+    <div class="user-block">
+      {{ data().requester }}
+    </div>
+    <!-- TODO: Se ha decidido ocultar los 'sentiments' temporalmente -->
+    <!-- <div
+      class="sentiment-block"
+      [ngClass]="sentimentsMap[data().sentimentId].className"
+    >
+      <span class="material-symbols-outlined">
+        {{ sentimentsMap[data().sentimentId].icon }}
+      </span>
+      {{ sentiment() }}
+    </div> -->
+  </div>
+</ng-template>
+
+<!-- Content -->
+<ng-template #content>
+  <div class="content-container">
+    <!-- Metada -->
+    <div class="metadata-block">
+      <div class="item">
+        <div class="title">Entidades / personas:</div>
+        <div class="value">
+          @if (data().entities) {
+            {{ data().entities!.join(', ') }}
+          } @else {
+            Sin entidades
+          }
+        </div>
+      </div>
+      <div class="item date">
+        <div class="title">Fecha:</div>
+        <div class="value">
+          {{ data().date | date: 'd MMMM y' | titlecase }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab with consultation text -->
+    <div class="tab-block">
+      <sdss-tabs class="new-sdss tab-texts" value="formatted-text">
+        <sdss-tab
+          [target]="panelFormattedTextId()"
+          value="formatted-text"
+          (click)="onChangeTab($event)"
+          (keydown.enter)="onChangeTab($event)"
+          >Texto</sdss-tab
+        >
+        <sdss-tab
+          [target]="panelOriginalTextId()"
+          value="original-text"
+          (click)="onChangeTab($event)"
+          (keydown.enter)="onChangeTab($event)"
+          >Texto original</sdss-tab
+        >
+        @if (data().summary) {
+          <sdss-tab
+            [target]="panelSummaryId()"
+            value="summary"
+            (click)="onChangeTab($event)"
+            (keydown.enter)="onChangeTab($event)"
+            >Resumen</sdss-tab
+          >
+        }
+        @if (data().answer) {
+          <sdss-tab
+            [target]="panelAnswerId()"
+            value="answer"
+            (click)="onChangeTab($event)"
+            (keydown.enter)="onChangeTab($event)"
+            >Respuesta</sdss-tab
+          >
+        }
+      </sdss-tabs>
+
+      <div [id]="panelFormattedTextId()" class="description-block">
+        <div class="description" [class.clamped-text]="clampText()">
+          {{ data().formattedText }}
+        </div>
+        @if (data().summary) {
+          <sdss-button
+            kind="tertiary"
+            class="new-sdss plain see-more"
+            (click)="toggleisTextClamped()"
+          >
+            {{ isTextClamped() ? 'Ver más' : 'Ver menos' }}
+          </sdss-button>
+        }
+      </div>
+
+      <div [id]="panelOriginalTextId()" class="description-block">
+        <div class="description" [class.clamped-text]="clampText()">
+          {{ data().originalText }}
+        </div>
+        @if (data().summary) {
+          <sdss-button
+            kind="tertiary"
+            class="new-sdss plain see-more"
+            (click)="toggleisTextClamped()"
+          >
+            {{ isTextClamped() ? 'Ver más' : 'Ver menos' }}
+          </sdss-button>
+        }
+      </div>
+
+      @if (data().summary) {
+        <div [id]="panelSummaryId()" class="description-block">
+          <div class="description">
+            {{ data().summary }}
+          </div>
+          <div class="feedback-block">
+            <span class="emphasized-text"> ¿Te parece útil este resumen? </span>
+            <div class="buttons">
+              <sdss-button
+                [kind]="isVotePositive() ? 'primary' : 'secondary'"
+                class="new-sdss small positive"
+                (click)="votePositiveSummary()"
+              >
+                Sí
+                <span slot="icon" class="material-symbols-outlined icon">
+                  thumb_up
+                </span>
+              </sdss-button>
+              <sdss-button
+                [kind]="isVoteNegative() ? 'primary' : 'secondary'"
+                class="new-sdss small"
+                (click)="voteNegativeSummary()"
+              >
+                No
+                <span slot="icon" class="material-symbols-outlined icon">
+                  thumb_down
+                </span>
+              </sdss-button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div [id]="panelAnswerId()" class="description-block">
+        <div class="description">
+          {{ data().answer }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    @if (hasActions() && data().isOpen) {
+      <div class="actions-block">
+        @if (applyCustomActions()) {
+          <ng-content select="[actions]"></ng-content>
+        } @else {
+          <div class="default-actions">
+            <div class="buttons-group">
+              @if (data().spam) {
+                <sdss-button
+                  size="sm"
+                  kind="primary"
+                  class="new-sdss"
+                  (click)="navigateToVerify()"
+                >
+                  Verificar
+                  <span slot="icon" class="material-symbols-outlined">
+                    published_with_changes
+                  </span>
+                </sdss-button>
+              } @else {
+                <sdss-button
+                  size="sm"
+                  kind="primary"
+                  class="new-sdss"
+                  (click)="navigateToProcess()"
+                >
+                  Tramitar
+                  <span slot="icon" class="material-symbols-outlined">
+                    reply
+                  </span>
+                </sdss-button>
+              }
+
+              <sdss-button
+                size="sm"
+                kind="primary"
+                class="new-sdss"
+                (click)="navigateToReassign()"
+              >
+                Reasignar
+                <span slot="icon" class="material-symbols-outlined">
+                  double_arrow
+                </span>
+              </sdss-button>
+            </div>
+
+            <sdss-button
+              kind="tertiary"
+              class="new-sdss"
+              (click)="finalizeWithoutAnswering()"
+            >
+              Finalizar consulta sin mensaje
+            </sdss-button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</ng-template>
+
+<modal
+  [(show)]="showValorateSummaryModal"
+  title="Valoración resumen"
+  (onConfirm)="confirmFeedbackResp.resolve($event)"
+  [autoClose]="false"
+>
+  <div content>
+    <sdss-textarea
+      class="new-sdss"
+      placeholder="Observaciones resumen"
+      rows="5"
+      width="auto"
+      [value]="feedbackControl.value"
+      [formControl]="feedbackControl"
+      [invalid]="feedbackControl | isInvalidControl"
+      invalid-text="Campo obligatorio"
+    >
+      <span slot="label-text">¿Por qué no te ha parecido útil el resumen?</span>
+    </sdss-textarea>
+  </div>
+</modal>

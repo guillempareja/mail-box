@@ -1,0 +1,14 @@
+@use '../../../../styles/base/variables' as *;
+
+.footer-container {
+  background: linear-gradient(
+    to bottom,
+    #022633 calc(100% - 103px),
+    #01131a 141.9px
+  );
+
+  .footer-wrapper {
+    max-width: ($page-max-width + 64px * 2);
+    margin-inline: auto;
+  }
+}
