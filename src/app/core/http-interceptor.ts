@@ -11,14 +11,16 @@ import { Observable, catchError, finalize, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from '@shared/models/login-fetch.types';
 import { LoaderService } from '@shared/services/stores/loader.service';
+import { Router } from '@angular/router';
 
 export const customHttpInterceptor: HttpInterceptorFn = (
-  req: HttpRequest<any>,
+  req: HttpRequest<unknown>,
   next: HttpHandlerFn,
-): Observable<HttpEvent<any>> => {
+): Observable<HttpEvent<unknown>> => {
   // Injects
   const toastr = inject(ToastrService);
   const loaderService = inject(LoaderService);
+  const router = inject(Router);
 
   const userDataString = localStorage.getItem('userData');
   const userData: LoginResponse | null =
@@ -40,18 +42,18 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   }
 
   return next(modifiedReq).pipe(
-    catchError((error) => {
-      if (error instanceof HttpErrorResponse) {
-        if (error.status === 401) {
-          if (req.url === '/login') {
-            toastr.error('Usuario o contraseña incorrectos');
-          } else {
-            toastr.error('La sesión ha expirado');
-          }
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        if (req.url === '/login') {
+          toastr.error('Usuario o contraseña incorrectos');
         } else {
-          toastr.error('Se ha producido un error');
+          toastr.error('La sesión ha expirado');
+          router.navigate(['/login']);
         }
+      } else {
+        toastr.error('Se ha producido un error');
       }
+
       return throwError(() => error);
     }),
     finalize(() => {
