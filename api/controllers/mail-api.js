@@ -3,11 +3,17 @@ const { loginMock } = require('../mocks/login');
 const { searchMock } = require('../mocks/search');
 const { mappingMock } = require('../mocks/mapping');
 const { similarConsultationsMock } = require('../mocks/similar-consultations');
+const { refreshTokenMock } = require('../mocks/refresh-token');
 
 const login = async (req, res = response) => {
   await delay();
   res.json(loginMock);
   // res.status(401).json();
+};
+
+const refreshToken = async (req, res = response) => {
+  await delay();
+  res.json(refreshTokenMock);
 };
 
 const search = async (req, res = response) => {
@@ -50,6 +56,7 @@ const mapping = (req, res = response) => {
 
 module.exports = {
   login,
+  refreshToken,
   search,
   mapping,
   summaryFeedback,

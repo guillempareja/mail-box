@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  CUSTOM_ELEMENTS_SCHEMA,
   inject,
   OnInit,
 } from '@angular/core';
@@ -12,37 +11,27 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TextInputDirective } from '@shared/directives/ng-text-input';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
 import { LoginService } from '@shared/services/stores/login.service';
-import { PageHeaderService } from '@shared/services/stores/page-header.service';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    TextInputDirective,
-    IsInvalidControlPipe,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, IsInvalidControlPipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export default class LoginComponent implements OnInit {
   // Injections
   private fb = inject(FormBuilder);
   private loginService = inject(LoginService);
-  private pageHeaderService = inject(PageHeaderService);
 
   // Data
   public form!: FormGroup;
 
   // Methods
   ngOnInit() {
-    this.pageHeaderService.updatePageHeader(false);
     this.loginService.logout();
     this.buildForm();
   }

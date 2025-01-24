@@ -1,33 +1,39 @@
 <form class="box" [formGroup]="form">
   <h2>Acceso</h2>
 
-  <div class="grid-template auto">
+  <div class="grid-template">
     <!-- User -->
-    <sdss-text-input
-      class="new-sdss col-12"
-      label="Usuario"
-      type="text"
-      placeholder="Introduce tu usuario"
-      [invalid]="form | isInvalidControl: 'username'"
-      invalid-text="Campo obligatorio"
-      [value]="form.get('username')?.value"
-      formControlName="username"
-    />
+    <div>
+      <label for="username">Usuario</label>
+      <input
+        id="username"
+        type="text"
+        placeholder="Introduce tu usuario"
+        [class.is-invalid]="form | isInvalidControl: 'username'"
+        [value]="form.get('username')?.value"
+        formControlName="username"
+      />
+      <div *ngIf="form | isInvalidControl: 'username'" class="invalid-feedback">
+        Campo obligatorio
+      </div>
+    </div>
 
     <!-- Password -->
-    <sdss-text-input
-      class="new-sdss col-12"
-      label="Contraseña"
-      type="password"
-      placeholder="Introduce tu contraseña"
-      [invalid]="form | isInvalidControl: 'password'"
-      invalid-text="Campo obligatorio"
-      [value]="form.get('password')?.value"
-      formControlName="password"
-    />
+    <div>
+      <label for="password">Contraseña</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="Introduce tu contraseña"
+        [class.is-invalid]="form | isInvalidControl: 'password'"
+        [value]="form.get('password')?.value"
+        formControlName="password"
+      />
+      <div *ngIf="form | isInvalidControl: 'password'" class="invalid-feedback">
+        Campo obligatorio
+      </div>
+    </div>
   </div>
 
-  <sdss-button (click)="login()" kind="primary" class="new-sdss long">
-    Acceder
-  </sdss-button>
+  <button (click)="login()">Acceder</button>
 </form>

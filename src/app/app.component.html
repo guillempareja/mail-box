@@ -1,11 +1,6 @@
 <header></header>
-<main class="new-sdss">
-  @if (pageHeaderService.show()) {
-    <page-header></page-header>
-  }
-  <div [class.page-tabulation]="!!pageHeaderService.breadcrumbRoute()">
-    <router-outlet></router-outlet>
-  </div>
+<main>
+  <router-outlet></router-outlet>
 </main>
 <footer></footer>
 

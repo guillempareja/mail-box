@@ -16,11 +16,11 @@ import { MailApiService } from '../../../../shared/services/apis/mail-api.servic
 import { LoginService } from '../../../../shared/services/stores/login.service';
 import { signal } from '@angular/core';
 import { MappingResponse } from '../../../../shared/models/mapping-fetch.types';
-import { InboxFilterValues } from '../../../../shared/models/inbox-filter.types';
+import { MainFilterValues } from '../../../../shared/models/main-filter.types';
 import {
-  InboxService,
+  MainService,
   INITIAL_FILTER_VALUES,
-} from '../../../../shared/services/stores/inbox.service';
+} from '../../../../shared/services/stores/main.service';
 import { CheckboxDirective } from '../../../../shared/directives/ng-checkbox';
 
 @Component({
@@ -43,7 +43,7 @@ export class FiltersComponent implements OnInit {
   private fb = inject(FormBuilder);
   private mailApiService = inject(MailApiService);
   private loginService = inject(LoginService);
-  public inboxService = inject(InboxService);
+  public mainService = inject(MainService);
 
   // Data
   public form!: FormGroup;
@@ -73,12 +73,12 @@ export class FiltersComponent implements OnInit {
   }
 
   private buildForm(): void {
-    this.form = this.fb.group<InboxFilterValues>(this.inboxService.filters());
+    this.form = this.fb.group<MainFilterValues>(this.mainService.filters());
   }
 
   public applyFilters(): void {
-    this.inboxService.filters.set(this.form.value);
-    this.inboxService.page.set(1);
+    this.mainService.filters.set(this.form.value);
+    this.mainService.page.set(1);
   }
 
   public resetFilters(): void {

@@ -27,23 +27,9 @@
     <!-- Modal Footer -->
     <div class="footer">
       @if (!acceptOnly()) {
-        <sdss-button
-          size="sm"
-          kind="secondary"
-          class="new-sdss"
-          (click)="close()"
-        >
-          Cancelar
-        </sdss-button>
+        <button (click)="close()">Cancelar</button>
       }
-      <sdss-button
-        size="sm"
-        kind="primary"
-        class="new-sdss"
-        (click)="confirm()"
-      >
-        Aceptar
-      </sdss-button>
+      <button (click)="confirm()">Aceptar</button>
     </div>
   </div>
 }

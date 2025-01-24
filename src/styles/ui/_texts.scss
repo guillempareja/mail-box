@@ -4,15 +4,3 @@
 .clamped-text {
   @include line-clamp;
 }
-
-.big-title {
-  color: $color-basic-black;
-  font-size: rem(36);
-  line-height: rem(45);
-  font-weight: 600;
-}
-
-.emphasized-text {
-  color: $color-primary-500;
-  font-weight: bold;
-}

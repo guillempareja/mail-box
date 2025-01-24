@@ -6,16 +6,9 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { customHttpInterceptor } from './core/http-interceptor';
 import { provideHttpCache, withHttpCacheInterceptor } from '@ngneat/cashew';
-import Aura from '@primeng/themes/aura';
-import { providePrimeNG } from 'primeng/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-      },
-    }),
     provideRouter(
       routes,
       withInMemoryScrolling({

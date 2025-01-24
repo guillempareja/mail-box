@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  CUSTOM_ELEMENTS_SCHEMA,
   input,
   model,
   output,
@@ -13,7 +12,6 @@ import {
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ModalComponent {
   // Models

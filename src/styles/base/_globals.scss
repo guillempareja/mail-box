@@ -56,20 +56,3 @@ ul {
 input {
   color: $color-basic-black;
 }
-
-textarea {
-  @include sdss-focus;
-  min-height: rem(265);
-  padding: $spacing-xs;
-  border-radius: var(--otd-radius-md);
-  border: 1px solid var(--cds-color-border-01);
-  background-color: var(--otd-color-textual-basic-light);
-
-  &:focus {
-    border: 1px solid var(--otd-color-primary-500);
-  }
-}
-
-sdss-textarea {
-  margin: 0;
-}

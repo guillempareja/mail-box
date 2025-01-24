@@ -19,14 +19,26 @@ export class LoginService {
     const response = await this.mailApiService.login(credentials);
     localStorage.setItem('userData', JSON.stringify(response));
     this.userData.set(response);
-    this.router.navigate(['/inbox']);
+    this.router.navigate(['/main']);
   }
 
-  public loadSession(): void {
+  public async loadSession(): Promise<void> {
     const storedUserData = localStorage.getItem('userData');
 
-    if (storedUserData) {
-      this.userData.set(JSON.parse(storedUserData));
+    if (!storedUserData) {
+      return;
+    }
+
+    const userData: LoginResponse = JSON.parse(storedUserData);
+    this.userData.set(userData);
+
+    try {
+      const newToken = await this.mailApiService.refreshToken(userData.token);
+      userData.token = newToken.token;
+      this.userData.set(userData);
+      localStorage.setItem('userData', JSON.stringify(userData));
+    } catch (error) {
+      this.logout();
     }
   }
 

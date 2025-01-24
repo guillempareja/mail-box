@@ -6,24 +6,6 @@
   gap: $spacing-xs;
 }
 
-.box {
-  @include box;
-}
-
-.page-tabulation {
-  margin-inline: $spacing-6xl;
-
-  @include breakpoint('tablet') {
-    margin-inline: 0;
-  }
-}
-
-.consultations-list {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-3xs;
-}
-
 .buttons-group {
   @include flex-wrap;
 }

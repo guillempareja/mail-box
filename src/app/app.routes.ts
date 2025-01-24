@@ -7,27 +7,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login.component'),
   },
   {
-    path: 'inbox',
-    loadComponent: () => import('./pages/inbox/inbox.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'process',
-    loadComponent: () => import('./pages/process/process.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'reassign',
-    loadComponent: () => import('./pages/reassign/reassign.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'verify',
-    loadComponent: () => import('./pages/verify/verify.component'),
+    path: 'main',
+    loadComponent: () => import('./pages/main/main.component'),
     canActivate: [AuthGuard],
   },
   {
     path: '**',
-    redirectTo: 'inbox',
+    redirectTo: 'main',
   },
 ];

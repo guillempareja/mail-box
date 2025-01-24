@@ -5,7 +5,9 @@
     @media (max-width: map-get($breakpoints, $device)) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @warn "The breakpoint `#{$device}` is not defined in the breakpoints map.";
   }
 }
@@ -21,6 +23,7 @@
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(360deg);
     }
@@ -40,10 +43,12 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
   }
+
   animation: fadeIn $duration $easing;
 }
 
@@ -60,29 +65,4 @@
   flex-wrap: wrap;
   gap: $gap;
   align-items: end;
-}
-
-@mixin box {
-  border-radius: $border-radius-md;
-  border: 1px solid $color-primary-150;
-  padding: $spacing-lg $spacing-md;
-}
-
-%focus-styles {
-  box-shadow: var(--otd-focus-shadow);
-  -webkit-box-shadow: var(--otd-focus-shadow);
-}
-
-@mixin sdss-focus($use-focus-visible: false) {
-  outline: none;
-
-  @if $use-focus-visible == true {
-    &:focus-visible {
-      @extend %focus-styles;
-    }
-  } @else {
-    &:focus {
-      @extend %focus-styles;
-    }
-  }
 }

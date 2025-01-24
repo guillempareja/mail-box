@@ -1,9 +1,0 @@
-@use '../../../../styles/base/variables' as *;
-
-h1 + breadcrumb {
-  margin-top: -15px; //Depends on SDSS breadcrumb component
-}
-
-breadcrumb {
-  padding-bottom: $spacing-4xs;
-}
