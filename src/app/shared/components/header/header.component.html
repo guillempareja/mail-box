@@ -1,23 +1,6 @@
-<sdss-header
-  class="new-sdss"
-  role="button"
-  tabindex="0"
-  class="new-sdss"
-  kind="seg-social"
-  urlHome="/"
-  urlss="#"
->
-  @if (loginService.userData()) {
-    <span slot="username">{{
-      loginService.userData()!.username | ucfirst
-    }}</span>
-    <sdss-button
-      (click)="loginService.logout()"
-      slot="btns"
-      class="new-sdss"
-      kind="tertiary"
-    >
-      Salir
-    </sdss-button>
-  }
-</sdss-header>
+<div class="header-container">
+  <div class="header-wrapper">
+    <span>{{ loginService.userData()!.username | ucfirst }}</span>
+    <button (click)="loginService.logout()">Salir</button>
+  </div>
+</div>

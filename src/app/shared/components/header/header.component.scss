@@ -1,14 +1,19 @@
 @use '../../../../styles/base/variables' as *;
+@use '../../../../styles/utils/index' as *;
 
-:host {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 120px;
-  border-bottom: 1px solid $color-primary-100;
-}
-
-sdss-header {
+.header-container {
+  background: black;
+  position: fixed;
   width: 100%;
-  overflow: hidden;
+  height: $header-height;
+
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 100%;
+    background: lightblue;
+    max-width: ($page-max-width + 64px * 2);
+    margin-inline: auto;
+  }
 }
