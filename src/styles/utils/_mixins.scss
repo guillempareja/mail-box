@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 @use '../base/variables' as *;
 
 @mixin breakpoint($device) {
@@ -6,9 +6,7 @@
     @media (max-width: map.get($breakpoints, $device)) {
       @content;
     }
-  }
-
-  @else {
+  } @else {
     @warn "The breakpoint `#{$device}` is not defined in the breakpoints map.";
   }
 }
@@ -31,7 +29,6 @@
       transform: rotate(360deg);
     }
   }
-
 }
 
 @mixin text-ellipsis {
@@ -87,9 +84,7 @@
     &:focus-visible {
       @extend %focus-styles;
     }
-  }
-
-  @else {
+  } @else {
     &:focus {
       @extend %focus-styles;
     }
