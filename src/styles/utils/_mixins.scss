@@ -1,8 +1,9 @@
+@use "sass:map";
 @use '../base/variables' as *;
 
 @mixin breakpoint($device) {
-  @if map-has-key($breakpoints, $device) {
-    @media (max-width: map-get($breakpoints, $device)) {
+  @if map.has-key($breakpoints, $device) {
+    @media (max-width: map.get($breakpoints, $device)) {
       @content;
     }
   }
@@ -19,6 +20,8 @@
 }
 
 @mixin spin {
+  animation: spin 1s linear infinite;
+
   @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -28,8 +31,6 @@
       transform: rotate(360deg);
     }
   }
-
-  animation: spin 1s linear infinite;
 }
 
 @mixin text-ellipsis {

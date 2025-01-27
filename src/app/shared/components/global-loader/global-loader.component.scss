@@ -13,12 +13,13 @@
 }
 
 .loader {
-  @include spin;
   width: rem(70);
   height: rem(70);
   border: 5px solid $color-basic-white;
   border-top: 5px solid transparent;
   border-radius: 50%;
+
+  @include spin;
 }
 
 .loader-text {
