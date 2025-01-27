@@ -1,6 +1,8 @@
 <div class="header-container">
   <div class="header-wrapper">
-    <span>{{ loginService.userData()!.username | ucfirst }}</span>
-    <button (click)="loginService.logout()">Salir</button>
+    @if (loginService.userData()) {
+      <span>{{ loginService.userData()!.username | ucfirst }}</span>
+      <button (click)="loginService.logout()">Salir</button>
+    }
   </div>
 </div>
