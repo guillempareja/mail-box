@@ -31,7 +31,7 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   }
 
   const modifiedReq = req.clone({
-    url: `${environment.mailApi}${req.url}`,
+    url: `${environment.minecoApi}${req.url}`,
     setHeaders: headers,
   });
 

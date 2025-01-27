@@ -15,7 +15,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class MailApiService {
+export class MinecoApiService {
   // Injections
   private http = inject(HttpClient);
 

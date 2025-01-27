@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginBody, LoginResponse } from '@shared/models/login-fetch.types';
-import { MailApiService } from '../apis/mail-api.service';
+import { MinecoApiService } from '../apis/mineco-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,14 +9,14 @@ import { MailApiService } from '../apis/mail-api.service';
 export class LoginService {
   // Injections
   private router = inject(Router);
-  private mailApiService = inject(MailApiService);
+  private minecoApiService = inject(MinecoApiService);
 
   // Data
   public userData = signal<LoginResponse | null>(null);
 
   // Methods
   public async login(credentials: LoginBody): Promise<void> {
-    const response = await this.mailApiService.login(credentials);
+    const response = await this.minecoApiService.login(credentials);
     localStorage.setItem('userData', JSON.stringify(response));
     this.userData.set(response);
     this.router.navigate(['/main']);
@@ -33,7 +33,7 @@ export class LoginService {
     this.userData.set(userData);
 
     try {
-      const newToken = await this.mailApiService.refreshToken(userData.token);
+      const newToken = await this.minecoApiService.refreshToken(userData.token);
       userData.token = newToken.token;
       this.userData.set(userData);
       localStorage.setItem('userData', JSON.stringify(userData));
