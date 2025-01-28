@@ -24,8 +24,7 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "./node_modules/sdss-web-components/dist/sdss-lib.js"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -39,7 +38,6 @@
               }
             ],
             "styles": [
-              "node_modules/sdss-web-components/dist/style.css",
               "node_modules/ngx-toastr/toastr.css",
               "src/styles/app.scss"
             ],
