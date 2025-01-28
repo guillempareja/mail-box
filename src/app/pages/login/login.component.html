@@ -1,4 +1,4 @@
-<form class="box" [formGroup]="form">
+<form class="box" [formGroup]="form" (ngSubmit)="login()">
   <h2>Acceso</h2>
 
   <div class="grid-template">
@@ -35,5 +35,5 @@
     </div>
   </div>
 
-  <button (click)="login()">Acceder</button>
+  <button type="submit">Acceder</button>
 </form>
