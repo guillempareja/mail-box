@@ -7,7 +7,7 @@ import { LoginService } from '@shared/services/stores/login.service';
 import { GlobalLoaderComponent } from '@shared/components/global-loader/global-loader.component';
 import { LoaderService } from '@shared/services/stores/loader.service';
 import { ModalComponent } from '@shared/components/modal/modal.component';
-import { GenericModalsUtilsService } from '@shared/services/utils/generic-modals.utils.service';
+import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent {
   // Injections
   public loginService = inject(LoginService);
   public loaderService = inject(LoaderService);
-  public genericModalsUtilsService = inject(GenericModalsUtilsService);
+  public genericModalsService = inject(GenericModalsService);
 
   // Methods
   ngOnInit(): void {
