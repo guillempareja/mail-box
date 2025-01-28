@@ -22,7 +22,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ManageablePromise } from '@shared/utils/manageable-promise..utils';
-import { GenericModalsUtilsService } from '@shared/services/utils/generic-modals.utils.service';
+import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
 import { MappingResponse } from '@shared/models/mapping-fetch.types';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { SearchItem } from '@shared/models/search-fetch.types';
@@ -54,7 +54,7 @@ export class ConsultationComponent implements OnInit {
   // Injections
   private router = inject(Router);
   private mailApiService = inject(MailApiService);
-  private genericModalsUtilsService = inject(GenericModalsUtilsService);
+  private genericModalsService = inject(GenericModalsService);
 
   // Inputs
   public data = model.required<SearchItem>();
@@ -219,9 +219,7 @@ export class ConsultationComponent implements OnInit {
 
   public async finalizeWithoutAnswering(): Promise<void> {
     // Open modal and wait confirmation
-    if (
-      !(await this.genericModalsUtilsService.confirmFinalizeWithoutAnswering())
-    ) {
+    if (!(await this.genericModalsService.confirmFinalizeWithoutAnswering())) {
       return; // The user has cancelled
     }
 

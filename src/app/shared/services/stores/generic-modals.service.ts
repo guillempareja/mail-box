@@ -4,7 +4,7 @@ import { ManageablePromise } from '@shared/utils/manageable-promise..utils';
 @Injectable({
   providedIn: 'root',
 })
-export class GenericModalsUtilsService {
+export class GenericModalsService {
   public isModalVisible = signal(false);
   public title = signal('');
   public text = signal('');

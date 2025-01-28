@@ -19,7 +19,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DropdownDirective } from '@shared/directives/ng-dropdown';
-import { GenericModalsUtilsService } from '@shared/services/utils/generic-modals.utils.service';
+import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
 import { MappingResponse } from '@shared/models/mapping-fetch.types';
@@ -45,7 +45,7 @@ export default class ReassignComponent implements OnInit {
   private pageHeaderService = inject(PageHeaderService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private genericModalsUtilsService = inject(GenericModalsUtilsService);
+  private genericModalsService = inject(GenericModalsService);
   private mailApiService = inject(MailApiService);
 
   // Data
@@ -122,6 +122,6 @@ export default class ReassignComponent implements OnInit {
   private async confirmReassign(): Promise<boolean> {
     const title = 'Reassignar la consulta';
     const text = '¿Está seguro que desea reasignar la consulta?';
-    return await this.genericModalsUtilsService.showModal(title, text);
+    return await this.genericModalsService.showModal(title, text);
   }
 }

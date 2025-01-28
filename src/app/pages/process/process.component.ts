@@ -23,7 +23,7 @@ import {
 } from '@angular/forms';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
-import { GenericModalsUtilsService } from '@shared/services/utils/generic-modals.utils.service';
+import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
 import { sleep } from '@shared/utils/delay.utils';
 import { TextareaDirective } from '@shared/directives/ng-textarea';
 import { MailApiService } from '@shared/services/apis/mail-api.service';
@@ -48,7 +48,7 @@ export default class ProcessComponent implements OnInit {
   private pageHeaderService = inject(PageHeaderService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private genericModalsUtilsService = inject(GenericModalsUtilsService);
+  private genericModalsService = inject(GenericModalsService);
   private mailApiService = inject(MailApiService);
 
   //Viewchilds
@@ -124,7 +124,7 @@ export default class ProcessComponent implements OnInit {
   private async confirmProcess(): Promise<boolean> {
     const title = 'Tramitar la consulta';
     const text = '¿Está seguro que desea tramitar la consulta?';
-    return await this.genericModalsUtilsService.showModal(title, text);
+    return await this.genericModalsService.showModal(title, text);
   }
 
   public updateConsultation(updatedConsultation: SearchItem): void {

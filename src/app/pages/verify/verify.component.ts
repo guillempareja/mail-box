@@ -12,7 +12,7 @@ import { ConsultationComponent } from '@shared/components/consultation/consultat
 import { MESSAGE_BREAD_CRUMB_ROUTE } from '@shared/constants/breadcrumb-routes';
 import { Router } from '@angular/router';
 import { SearchItem } from '@shared/models/search-fetch.types';
-import { GenericModalsUtilsService } from '@shared/services/utils/generic-modals.utils.service';
+import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
 import { MailApiService } from '@shared/services/apis/mail-api.service';
 
 @Component({
@@ -27,7 +27,7 @@ export default class VerifyComponent implements OnInit {
   // Injections
   private pageHeaderService = inject(PageHeaderService);
   private router = inject(Router);
-  private genericModalsUtilsService = inject(GenericModalsUtilsService);
+  private genericModalsService = inject(GenericModalsService);
   private mailApiService = inject(MailApiService);
 
   // Data
@@ -46,9 +46,7 @@ export default class VerifyComponent implements OnInit {
 
   public async finalizeWithoutAnswering(): Promise<void> {
     // Open modal and wait confirmation
-    if (
-      !(await this.genericModalsUtilsService.confirmFinalizeWithoutAnswering())
-    ) {
+    if (!(await this.genericModalsService.confirmFinalizeWithoutAnswering())) {
       return; // The user has cancelled
     }
 
@@ -84,6 +82,6 @@ export default class VerifyComponent implements OnInit {
   private async confirmNotSPAM(): Promise<boolean> {
     const title = 'No es SPAM';
     const text = '¿Está seguro de que la consulta no es SPAM?';
-    return await this.genericModalsUtilsService.showModal(title, text);
+    return await this.genericModalsService.showModal(title, text);
   }
 }

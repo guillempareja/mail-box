@@ -14,9 +14,9 @@
 }
 
 <modal
-  [(show)]="genericModalsUtilsService.isModalVisible"
-  [title]="genericModalsUtilsService.title()"
-  [text]="genericModalsUtilsService.text()"
-  [acceptOnly]="genericModalsUtilsService.acceptOnly()"
-  (onConfirm)="genericModalsUtilsService.confirmResp.resolve($event)"
+  [(show)]="genericModalsService.isModalVisible"
+  [title]="genericModalsService.title()"
+  [text]="genericModalsService.text()"
+  [acceptOnly]="genericModalsService.acceptOnly()"
+  (onConfirm)="genericModalsService.confirmResp.resolve($event)"
 />
