@@ -12,6 +12,7 @@ import { environment } from '../../environments/environment';
 import { LoginResponse } from '@shared/models/login-fetch.types';
 import { LoaderService } from '@shared/services/stores/loader.service';
 import { Router } from '@angular/router';
+import { CustomHeaders } from '@shared/enums/custom-headers.enum';
 
 export const customHttpInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -36,7 +37,7 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   });
 
   let shouldShowLoader = false;
-  if (req.headers.has('X-Show-Loader')) {
+  if (req.headers.has(CustomHeaders.SHOW_LOADER)) {
     shouldShowLoader = true;
     loaderService.show();
   }
