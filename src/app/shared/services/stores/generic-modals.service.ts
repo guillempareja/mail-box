@@ -5,12 +5,14 @@ import { ManageablePromise } from '@shared/utils/manageable-promise..utils';
   providedIn: 'root',
 })
 export class GenericModalsService {
+  // Data
   public isModalVisible = signal(false);
   public title = signal('');
   public text = signal('');
   public acceptOnly = signal(false);
   public confirmResp = new ManageablePromise();
 
+  // Methods
   public showModal(
     title: string,
     text: string,

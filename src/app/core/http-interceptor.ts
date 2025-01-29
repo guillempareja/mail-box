@@ -7,20 +7,20 @@ import {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, catchError, finalize, throwError } from 'rxjs';
+import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from '@shared/models/login-fetch.types';
 import { LoaderService } from '@shared/services/stores/loader.service';
-import { Router } from '@angular/router';
+import { LoginService } from '@shared/services/stores/login.service';
+import { CustomHeaders } from '@shared/enums/custom-headers.enum';
 
 export const customHttpInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
-  // Injects
   const toastr = inject(ToastrService);
   const loaderService = inject(LoaderService);
-  const router = inject(Router);
+  const loginService = inject(LoginService);
 
   const userDataString = localStorage.getItem('userData');
   const userData: LoginResponse | null =
@@ -36,25 +36,51 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   });
 
   let shouldShowLoader = false;
-  if (req.headers.has('X-Show-Loader')) {
+  if (req.headers.has(CustomHeaders.SHOW_LOADER)) {
     shouldShowLoader = true;
     loaderService.show();
   }
+
+  const handleSessionExpired = () => {
+    toastr.error('La sesión ha expirado');
+    loginService.logout();
+  };
+
+  const refreshTokenAndRefetch = () => {
+    return loginService.refreshToken().pipe(
+      switchMap((token) =>
+        next(
+          modifiedReq.clone({
+            url: modifiedReq.urlWithParams,
+            setHeaders: {
+              Authorization: `Bearer ${token?.token}`,
+            },
+          }),
+        ),
+      ),
+      catchError((error: HttpErrorResponse) => {
+        handleSessionExpired();
+        return throwError(() => new Error(error.message));
+      }),
+    );
+  };
 
   return next(modifiedReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         if (req.url === '/login') {
           toastr.error('Usuario o contraseña incorrectos');
+          return throwError(() => new Error(error.message));
+        } else if (req.url === '/refreshToken') {
+          handleSessionExpired();
+          return throwError(() => new Error(error.message));
         } else {
-          toastr.error('La sesión ha expirado');
-          router.navigate(['/login']);
+          return refreshTokenAndRefetch();
         }
-      } else {
-        toastr.error('Se ha producido un error');
       }
 
-      return throwError(() => error);
+      toastr.error('Se ha producido un error');
+      return throwError(() => new Error(error.message));
     }),
     finalize(() => {
       if (shouldShowLoader) {

@@ -1,5 +1,6 @@
 const refreshTokenMock = {
-  "token": "tokenRefreshed",
+  "token": "tokenUsuario3",
+  "refreshToken": "tokenUsuario4",
 };
 
 module.exports = {

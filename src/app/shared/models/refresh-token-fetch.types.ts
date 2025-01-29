@@ -1,9 +1,10 @@
 import { Token } from './login-fetch.types';
 
 export type RefreshTokenBody = {
-  token: Token;
+  refreshToken: Token;
 };
 
 export type RefreshTokenResponse = {
   token: Token;
+  refreshToken: Token;
 };

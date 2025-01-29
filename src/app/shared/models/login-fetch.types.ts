@@ -8,6 +8,5 @@ export type LoginBody = {
 export type LoginResponse = {
   username: string;
   token: Token;
-  topicIds: number[];
-  userId: string;
+  refreshToken: Token;
 };

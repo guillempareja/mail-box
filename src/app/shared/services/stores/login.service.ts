@@ -2,6 +2,8 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginBody, LoginResponse } from '@shared/models/login-fetch.types';
 import { MinecoApiService } from '../apis/mineco-api.service';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+import { RefreshTokenResponse } from '@shared/models/refresh-token-fetch.types';
 
 @Injectable({
   providedIn: 'root',
@@ -22,23 +24,37 @@ export class LoginService {
     this.router.navigate(['/main']);
   }
 
-  public async loadSession(): Promise<void> {
+  public refreshToken(): Observable<RefreshTokenResponse> {
     const storedUserData = localStorage.getItem('userData');
+    const throwTokenError = () => {
+      this.logout();
+      return throwError(() => new Error('Failed to refresh token'));
+    };
 
     if (!storedUserData) {
-      return;
+      throwTokenError();
     }
 
-    const userData: LoginResponse = JSON.parse(storedUserData);
-    this.userData.set(userData);
+    const userData: LoginResponse = JSON.parse(storedUserData!);
 
-    try {
-      const newToken = await this.minecoApiService.refreshToken(userData.token);
-      userData.token = newToken.token;
-      this.userData.set(userData);
-      localStorage.setItem('userData', JSON.stringify(userData));
-    } catch (error) {
-      this.logout();
+    return this.minecoApiService.refreshToken(userData.refreshToken).pipe(
+      tap((response) => {
+        const updatedUserData = {
+          ...userData,
+          ...response,
+        };
+        this.userData.set(updatedUserData);
+        localStorage.setItem('userData', JSON.stringify(updatedUserData));
+      }),
+      catchError(throwTokenError),
+    );
+  }
+
+  public loadSession(): void {
+    const storedUserData = localStorage.getItem('userData');
+
+    if (storedUserData) {
+      this.userData.set(JSON.parse(storedUserData));
     }
   }
 
