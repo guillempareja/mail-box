@@ -4,18 +4,18 @@ import { computed, Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class LoaderService {
-  // Data
-  private _isLoading = signal<boolean>(false);
+  // Counter for active processes
+  private activeRequests = signal<number>(0);
 
   // Computed
-  isLoading = computed(() => this._isLoading());
+  public isLoading = computed(() => this.activeRequests() > 0);
 
   // Methods
   public show(): void {
-    this._isLoading.set(true);
+    this.activeRequests.update((count) => count + 1);
   }
 
   public hide(): void {
-    this._isLoading.set(false);
+    this.activeRequests.update((count) => Math.max(0, count - 1));
   }
 }
