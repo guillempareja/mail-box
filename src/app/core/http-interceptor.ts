@@ -9,7 +9,6 @@ import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { LoginResponse } from '@shared/models/login-fetch.types';
 import { LoaderService } from '@shared/services/stores/loader.service';
 import { LoginService } from '@shared/services/stores/login.service';
 import { CustomHeaders } from '@shared/enums/custom-headers.enum';
@@ -22,12 +21,9 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   const loaderService = inject(LoaderService);
   const loginService = inject(LoginService);
 
-  const userDataString = localStorage.getItem('userData');
-  const userData: LoginResponse | null =
-    userDataString && JSON.parse(userDataString);
   const headers: Record<string, string> = {};
-  if (userData?.token) {
-    headers['Authorization'] = `Bearer ${userData.token}`;
+  if (loginService.userData()) {
+    headers['Authorization'] = `Bearer ${loginService.userData()!.token}`;
   }
 
   const modifiedReq = req.clone({

@@ -2,17 +2,16 @@
 @use '../../../../styles/utils/index' as *;
 
 .header-container {
-  background: black;
   position: fixed;
   width: 100%;
   height: $header-height;
+  background: lightblue;
 
   .header-wrapper {
     display: flex;
     align-items: center;
     justify-content: end;
     height: 100%;
-    background: lightblue;
     max-width: ($page-max-width + 64px * 2);
     margin-inline: auto;
   }

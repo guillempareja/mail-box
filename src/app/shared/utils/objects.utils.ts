@@ -40,23 +40,3 @@ export function removeEmptyProperties<T>(obj: T): T | Partial<T> {
 
   return obj; // Return non-empty primitive values
 }
-
-/**
- * Updates an item in a list by replacing it with a new version if it exists.
- *
- * @template T - The type of items in the list.
- * @param list - The array of items to update.
- * @param updatedItem - The updated item to replace the existing one in the list.
- * @returns A new array with the updated item, or the original array if the item is not found.
- */
-export function updateList<T>(list: T[], updatedItem: T): T[] {
-  const index = list.findIndex((item) => _.isEqual(item, updatedItem));
-
-  if (index !== -1) {
-    const updatedList = [...list];
-    updatedList[index] = updatedItem;
-    return updatedList;
-  }
-
-  return list;
-}

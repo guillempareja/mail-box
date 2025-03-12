@@ -1,14 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
+  ElementRef,
   input,
   model,
   output,
+  viewChild,
 } from '@angular/core';
+import { createFocusTrap, FocusTrap } from 'focus-trap';
 
 @Component({
   selector: 'modal',
-  imports: [],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,6 +19,9 @@ import {
 export class ModalComponent {
   // Models
   public show = model(false);
+
+  // Viewchilds
+  private modal = viewChild<ElementRef>('modal');
 
   // Inputs
   public title = input.required<string>();
@@ -25,6 +31,24 @@ export class ModalComponent {
 
   // Ouputs
   public onConfirm = output<boolean>();
+
+  // Data
+  private focusTrapInstance!: FocusTrap;
+
+  // Effects
+  syncFocusTrapEffect = effect(() => {
+    const container = this.modal()?.nativeElement;
+
+    if (!container) {
+      this.focusTrapInstance?.deactivate();
+      return;
+    }
+
+    this.focusTrapInstance = createFocusTrap(container, {
+      tabbableOptions: { getShadowRoot: true },
+    });
+    this.focusTrapInstance.activate();
+  });
 
   // Methods
   public close(): void {

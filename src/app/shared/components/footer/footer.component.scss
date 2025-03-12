@@ -2,11 +2,10 @@
 @use '../../../../styles/utils/index' as *;
 
 .footer-container {
-  background: black;
+  background: lightblue;
 
   .footer-wrapper {
     height: rem(100);
-    background: lightblue;
     max-width: ($page-max-width + 64px * 2);
     margin-inline: auto;
   }
