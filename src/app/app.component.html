@@ -13,5 +13,5 @@
   [title]="genericModalsService.title()"
   [text]="genericModalsService.text()"
   [acceptOnly]="genericModalsService.acceptOnly()"
-  (onConfirm)="genericModalsService.confirmResp.resolve($event)"
+  (confirm)="genericModalsService.confirmResp.resolve($event)"
 />

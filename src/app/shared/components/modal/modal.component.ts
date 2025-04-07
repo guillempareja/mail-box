@@ -30,7 +30,7 @@ export class ModalComponent {
   public autoClose = input(true);
 
   // Ouputs
-  public onConfirm = output<boolean>();
+  public confirm = output<boolean>();
 
   // Data
   private focusTrapInstance!: FocusTrap;
@@ -53,13 +53,13 @@ export class ModalComponent {
   // Methods
   public close(): void {
     this.show.set(false);
-    this.onConfirm.emit(false);
+    this.confirm.emit(false);
   }
 
-  public confirm(): void {
+  public onConfirm(): void {
     if (this.autoClose()) {
       this.show.set(false);
     }
-    this.onConfirm.emit(true);
+    this.confirm.emit(true);
   }
 }
