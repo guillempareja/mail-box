@@ -1,67 +1,119 @@
 @use '../base/variables' as *;
 @use '../utils/index' as *;
 
-.grid-template {
-  display: grid;
-  gap: $spacing-xs;
-  grid-template-columns: repeat(12, 1fr);
-
+@mixin full-width-columns {
   &:not(.auto) {
     > * {
       width: 100%;
       grid-column: span 12;
     }
   }
+}
 
-  @include breakpoint('tablet') {
-    grid-template-columns: 1fr;
-  }
+@mixin one-column-grid {
+  @include full-width-columns;
+  grid-template-columns: 1fr;
+}
+
+.grid-template {
+  @include full-width-columns;
+  display: grid;
+  gap: $spacing-md;
+  grid-template-columns: repeat(12, 1fr);
 
   > .col-1 {
     grid-column: span 1;
+    &.new-row {
+      grid-column: 1 / span 1;
+    }
   }
 
   > .col-2 {
     grid-column: span 2;
+    &.new-row {
+      grid-column: 1 / span 2;
+    }
   }
 
   > .col-3 {
     grid-column: span 3;
+    &.new-row {
+      grid-column: 1 / span 3;
+    }
   }
 
   > .col-4 {
     grid-column: span 4;
+    &.new-row {
+      grid-column: 1 / span 4;
+    }
   }
 
   > .col-5 {
     grid-column: span 5;
+    &.new-row {
+      grid-column: 1 / span 5;
+    }
   }
 
   > .col-6 {
     grid-column: span 6;
+    &.new-row {
+      grid-column: 1 / span 6;
+    }
   }
 
   > .col-7 {
     grid-column: span 7;
+    &.new-row {
+      grid-column: 1 / span 7;
+    }
   }
 
   > .col-8 {
     grid-column: span 8;
+    &.new-row {
+      grid-column: 1 / span 8;
+    }
   }
 
   > .col-9 {
     grid-column: span 9;
+    &.new-row {
+      grid-column: 1 / span 9;
+    }
   }
 
   > .col-10 {
     grid-column: span 10;
+    &.new-row {
+      grid-column: 1 / span 10;
+    }
   }
 
   > .col-11 {
     grid-column: span 11;
+    &.new-row {
+      grid-column: 1 / span 11;
+    }
   }
 
   > .col-12 {
     grid-column: span 12;
+    &.new-row {
+      grid-column: 1 / span 12;
+    }
+  }
+
+  &.break-laptop {
+    @include breakpoint('laptop') {
+      @include one-column-grid;
+    }
+  }
+
+  &.grid-template {
+    @include breakpoint('tablet') {
+      @include one-column-grid;
+    }
   }
 }
