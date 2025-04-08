@@ -38,12 +38,7 @@ export function isDateAfter(
   includeEqual: boolean = true,
   ignoreTime: boolean = true,
 ): boolean {
-  const dateToCompare = ignoreTime ? startOfDay(targetDate) : targetDate;
-  const referenceDate = ignoreTime ? startOfDay(startDate) : startDate;
-
-  return includeEqual
-    ? dateToCompare >= referenceDate
-    : dateToCompare > referenceDate;
+  return isDateBefore(startDate, targetDate, includeEqual, ignoreTime);
 }
 
 /**
