@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
-import { LoginService } from '@shared/services/stores/login.service';
+import { LoginService } from '@core/services/login.service';
 
 @Component({
   selector: 'app-login',

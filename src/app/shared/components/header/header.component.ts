@@ -5,7 +5,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
 } from '@angular/core';
-import { LoginService } from '@shared/services/stores/login.service';
+import { LoginService } from '@core/services/login.service';
 import { NgPipesModule } from 'ngx-pipes';
 
 @Component({

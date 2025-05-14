@@ -8,9 +8,9 @@ import {
 import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { LoaderService } from '@shared/services/stores/loader.service';
-import { LoginService } from '@shared/services/stores/login.service';
+import { environment } from '../../../environments/environment';
+import { LoaderService } from '@core/services/loader.service';
+import { LoginService } from '@core/services/login.service';
 import { CustomHeaders } from '@shared/enums/custom-headers.enum';
 
 export const customHttpInterceptor: HttpInterceptorFn = (

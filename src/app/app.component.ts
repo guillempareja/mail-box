@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@shared/components/header/header.component';
 import { FooterComponent } from '@shared/components/footer/footer.component';
-import { LoginService } from '@shared/services/stores/login.service';
+import { LoginService } from '@core/services/login.service';
 import { GlobalLoaderComponent } from '@shared/components/global-loader/global-loader.component';
-import { LoaderService } from '@shared/services/stores/loader.service';
+import { LoaderService } from '@core/services/loader.service';
 import { ModalComponent } from '@shared/components/modal/modal.component';
-import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
+import { GenericModalsService } from '@core/services/generic-modals.service';
 
 @Component({
   selector: 'app-root',

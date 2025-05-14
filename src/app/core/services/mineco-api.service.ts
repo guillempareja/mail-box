@@ -6,7 +6,7 @@ import {
   LoginResponse,
   Token,
 } from '@shared/models/login-fetch.types';
-import { CustomHeaders } from '../../enums/custom-headers.enum';
+import { CustomHeaders } from '@shared/enums/custom-headers.enum';
 import {
   RefreshTokenBody,
   RefreshTokenResponse,

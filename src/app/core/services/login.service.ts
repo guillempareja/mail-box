@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginBody, LoginResponse } from '@shared/models/login-fetch.types';
-import { MinecoApiService } from '../apis/mineco-api.service';
+import { MinecoApiService } from '@core/services/mineco-api.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { RefreshTokenResponse } from '@shared/models/refresh-token-fetch.types';
 

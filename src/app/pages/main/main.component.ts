@@ -5,7 +5,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { MinecoApiService } from '@shared/services/apis/mineco-api.service';
+import { MinecoApiService } from '@core/services/mineco-api.service';
 
 @Component({
   selector: 'app-main',
