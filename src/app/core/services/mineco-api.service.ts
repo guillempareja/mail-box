@@ -6,7 +6,7 @@ import {
   LoginResponse,
   Token,
 } from '@shared/models/login-fetch.types';
-import { CustomHeaders } from '@shared/enums/custom-headers.enum';
+import { CustomHeader } from '@shared/enums/custom-headers.enum';
 import {
   RefreshTokenBody,
   RefreshTokenResponse,
@@ -25,7 +25,7 @@ export class MinecoApiService {
     return firstValueFrom(
       this.http.get<TestResponse>('/test', {
         headers: {
-          [CustomHeaders.SHOW_LOADER]: 'true',
+          [CustomHeader.SHOW_LOADER]: 'true',
         },
       }),
     );
@@ -35,7 +35,7 @@ export class MinecoApiService {
     return firstValueFrom(
       this.http.post<LoginResponse>('/login', body, {
         headers: {
-          [CustomHeaders.SHOW_LOADER]: 'true',
+          [CustomHeader.SHOW_LOADER]: 'true',
         },
       }),
     );
@@ -45,7 +45,7 @@ export class MinecoApiService {
     const body: RefreshTokenBody = { refreshToken };
     return this.http.post<RefreshTokenResponse>('/refreshToken', body, {
       headers: {
-        [CustomHeaders.SHOW_LOADER]: 'true',
+        [CustomHeader.SHOW_LOADER]: 'true',
       },
     });
   }

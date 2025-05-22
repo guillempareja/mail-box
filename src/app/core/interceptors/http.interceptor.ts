@@ -11,7 +11,7 @@ import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoaderService } from '@core/services/loader.service';
 import { LoginService } from '@core/services/login.service';
-import { CustomHeaders } from '@shared/enums/custom-headers.enum';
+import { CustomHeader } from '@shared/enums/custom-headers.enum';
 
 export const customHttpInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -32,7 +32,7 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   });
 
   let shouldShowLoader = false;
-  if (req.headers.has(CustomHeaders.SHOW_LOADER)) {
+  if (req.headers.has(CustomHeader.SHOW_LOADER)) {
     shouldShowLoader = true;
     loaderService.show();
   }
