@@ -1,44 +1,61 @@
 import _ from 'lodash';
 
 /**
- * Recursively removes empty properties from an object or array.
- *
- * @template T - The type of the object or array to process.
- * @param obj - The object or array to clean. It can also be a primitive value.
- * @returns The cleaned object or array with empty properties removed, or the original value if it is not an object or array.
+ * Recursively removes empty properties from plain objects or arrays.
+ * Leaves intact any non–plain-object instances (Date, RegExp, custom classes…).
  */
 export function removeEmptyProperties<T>(obj: T): T | Partial<T> {
-  if (obj == null || obj === '') {
-    return obj; // Base case for empty values
+  // 1) Preserve non–plain objects (Date, RegExp, Map, custom classes…)
+  if (
+    obj !== null &&
+    typeof obj === 'object' &&
+    !Array.isArray(obj) &&
+    Object.getPrototypeOf(obj) !== Object.prototype
+  ) {
+    return obj;
   }
 
+  // 2) Base cases for "empty"
+  if (obj == null || obj === '') {
+    return obj;
+  }
+
+  // 3) Arrays: recurse y filtra
   if (Array.isArray(obj)) {
-    // Recursively process arrays
     return obj
       .map((item) => removeEmptyProperties(item))
-      .filter((item) => item != null && item != '') as T;
+      .filter((item) => item != null && item !== '') as T;
   }
 
-  if (typeof obj === 'object' && obj !== null) {
-    // Recursively process objects
-    return Object.entries(obj).reduce((acc, [key, value]) => {
-      const cleanedValue = removeEmptyProperties(value);
+  // 4) Plain objects: recorre sus entries
+  if (typeof obj === 'object') {
+    return (
+      Object.entries(obj as Record<string, unknown>) as [keyof T, unknown][]
+    ).reduce((acc, [key, value]) => {
+      const cleaned = removeEmptyProperties(value as T);
+
+      // Solo los plain objects vacíos se consideran para eliminar
+      const isEmptyPlainObject =
+        typeof cleaned === 'object' &&
+        cleaned !== null &&
+        !Array.isArray(cleaned) &&
+        Object.getPrototypeOf(cleaned) === Object.prototype &&
+        Object.keys(cleaned).length === 0;
+
       if (
-        cleanedValue != null &&
-        cleanedValue != '' &&
-        !(Array.isArray(cleanedValue) && cleanedValue.length === 0) &&
-        !(
-          typeof cleanedValue === 'object' &&
-          Object.keys(cleanedValue).length === 0
-        )
+        cleaned != null &&
+        cleaned !== '' &&
+        !(Array.isArray(cleaned) && cleaned.length === 0) &&
+        !isEmptyPlainObject
       ) {
-        acc[key as keyof T] = cleanedValue;
+        acc[key] = cleaned as T[keyof T];
       }
       return acc;
     }, {} as Partial<T>);
   }
 
-  return obj; // Return non-empty primitive values
+  // 5) Primitives no vacíos
+  return obj;
 }
 
 /**
