@@ -21,7 +21,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ManageablePromise } from '@shared/utils/manageable-promise..utils';
+import { ManageablePromise } from '@shared/utils/manageable-promise.utils';
 import { GenericModalsService } from '@shared/services/stores/generic-modals.service';
 import { MappingResponse } from '@shared/models/mapping-fetch.types';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
