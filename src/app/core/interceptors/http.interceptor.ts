@@ -32,7 +32,7 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   });
 
   let shouldShowLoader = false;
-  if (req.headers.has(CustomHeader.SHOW_LOADER)) {
+  if (req.headers.get(CustomHeader.SHOW_LOADER) === 'true') {
     shouldShowLoader = true;
     loaderService.show();
   }
