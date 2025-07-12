@@ -4,8 +4,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
-import { customHttpInterceptor } from '@core/interceptors/http-interceptor';
 import { provideHttpCache, withHttpCacheInterceptor } from '@ngneat/cashew';
+import { customHttpInterceptor } from '@core/interceptors/http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
