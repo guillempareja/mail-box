@@ -25,16 +25,5 @@
         "prettier/prettier": "error"
       }
     },
-    {
-      "files": [
-        "*.html"
-      ],
-      "plugins": [
-        "@angular-eslint/template"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ]
-    }
   ]
 }
