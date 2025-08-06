@@ -14,6 +14,8 @@ import {
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
 import { LoginService } from '@core/services/login.service';
+import { FormService } from '@shared/services/form.service';
+import { sleep } from '@shared/utils/delay.utils';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ export default class LoginComponent implements OnInit {
   // Injections
   private fb = inject(FormBuilder);
   private loginService = inject(LoginService);
+  private formService = inject(FormService);
 
   // Data
   public form!: FormGroup;
@@ -43,9 +46,12 @@ export default class LoginComponent implements OnInit {
     });
   }
 
-  public login(): void {
+  public async login(): Promise<void> {
     markAllControlsAsTouched(this.form);
+
     if (!this.form.valid) {
+      await sleep(); // Wait for the UI to render validation errors before scrollings
+      this.formService.navigateToFormError();
       return;
     }
 

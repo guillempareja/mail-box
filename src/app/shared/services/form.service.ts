@@ -8,7 +8,7 @@ export class FormService {
 
   // Methods
   navigateToFormError(): void {
-    const invalidElement = document.querySelector('[data-invalid="true"]');
+    const invalidElement = document.querySelector('.ng-invalid');
 
     if (invalidElement) {
       invalidElement.scrollIntoView({

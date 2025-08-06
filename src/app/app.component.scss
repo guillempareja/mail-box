@@ -8,7 +8,7 @@
 }
 
 main {
-  margin-top: $header-height;
+  margin-top: var(--header-height);
   flex-grow: 1;
   display: flex;
   flex-direction: column;
