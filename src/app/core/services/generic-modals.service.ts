@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { ManageablePromise } from '@shared/utils/manageable-promise..utils';
+import { ManageablePromise } from '@shared/utils/manageable-promise.utils';
 
 @Injectable({
   providedIn: 'root',
