@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoaderService } from '@core/services/loader.service';
-import { LoginService } from '@core/services/login.service';
+import { AuthService } from '@core/services/auth.service';
 import { CustomHeader } from '@shared/enums/custom-headers.enum';
 
 export const customHttpInterceptor: HttpInterceptorFn = (
@@ -19,11 +19,11 @@ export const customHttpInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<unknown>> => {
   const toastr = inject(ToastrService);
   const loaderService = inject(LoaderService);
-  const loginService = inject(LoginService);
+  const authService = inject(AuthService);
 
   const headers: Record<string, string> = {};
-  if (loginService.userData()) {
-    headers['Authorization'] = `Bearer ${loginService.userData()!.token}`;
+  if (authService.userData()) {
+    headers['Authorization'] = `Bearer ${authService.userData()!.token}`;
   }
 
   const modifiedReq = req.clone({
@@ -39,11 +39,11 @@ export const customHttpInterceptor: HttpInterceptorFn = (
 
   const handleSessionExpired = () => {
     toastr.error('La sesión ha expirado');
-    loginService.logout();
+    authService.logout();
   };
 
   const refreshTokenAndRefetch = () => {
-    return loginService.refreshToken().pipe(
+    return authService.refreshToken().pipe(
       switchMap((token) =>
         next(
           modifiedReq.clone({

@@ -8,7 +8,7 @@ import { RefreshTokenResponse } from '@shared/models/refresh-token-fetch.types';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthService {
   // Injections
   private router = inject(Router);
   private apiService = inject(ApiService);

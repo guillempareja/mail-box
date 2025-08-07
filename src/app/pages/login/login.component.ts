@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
-import { LoginService } from '@core/services/login.service';
+import { AuthService } from '@core/services/auth.service';
 import { FormService } from '@shared/services/form.service';
 import { sleep } from '@shared/utils/delay.utils';
 
@@ -27,7 +27,7 @@ import { sleep } from '@shared/utils/delay.utils';
 export default class LoginComponent implements OnInit {
   // Injections
   private fb = inject(FormBuilder);
-  private loginService = inject(LoginService);
+  private authService = inject(AuthService);
   private formService = inject(FormService);
 
   // Data
@@ -35,7 +35,7 @@ export default class LoginComponent implements OnInit {
 
   // Methods
   ngOnInit() {
-    this.loginService.logout();
+    this.authService.logout();
     this.buildForm();
   }
 
@@ -55,6 +55,6 @@ export default class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.login(this.form.value);
+    this.authService.login(this.form.value);
   }
 }

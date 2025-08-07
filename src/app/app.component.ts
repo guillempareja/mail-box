@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@shared/components/header/header.component';
 import { FooterComponent } from '@shared/components/footer/footer.component';
-import { LoginService } from '@core/services/login.service';
+import { AuthService } from '@core/services/auth.service';
 import { GlobalLoaderComponent } from '@shared/components/global-loader/global-loader.component';
 import { LoaderService } from '@core/services/loader.service';
 import { ModalComponent } from '@shared/components/modal/modal.component';
@@ -24,12 +24,12 @@ import { GenericModalsService } from '@core/services/generic-modals.service';
 })
 export class AppComponent implements OnInit {
   // Injections
-  public loginService = inject(LoginService);
+  public authService = inject(AuthService);
   public loaderService = inject(LoaderService);
   public genericModalsService = inject(GenericModalsService);
 
   // Methods
   ngOnInit(): void {
-    this.loginService.loadSession();
+    this.authService.loadSession();
   }
 }

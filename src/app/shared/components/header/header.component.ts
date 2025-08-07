@@ -7,7 +7,7 @@ import {
   ElementRef,
   inject,
 } from '@angular/core';
-import { LoginService } from '@core/services/login.service';
+import { AuthService } from '@core/services/auth.service';
 import { NgPipesModule } from 'ngx-pipes';
 
 @Component({
@@ -21,7 +21,7 @@ import { NgPipesModule } from 'ngx-pipes';
 export class HeaderComponent implements AfterViewInit {
   // Injections
   private host = inject(ElementRef<HTMLElement>);
-  public loginService = inject(LoginService);
+  public authService = inject(AuthService);
 
   // Methods
   ngAfterViewInit(): void {
