@@ -1,5 +1,4 @@
-@use '../../../../styles/base/variables' as *;
-@use '../../../../styles/utils/index' as *;
+@use 'imports' as *;
 
 :host {
   @include flex-center;
