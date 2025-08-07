@@ -10,7 +10,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 // API routes
-app.use('/mineco-api', require('./routes/mineco-api.js'));
+app.use('/api', require('./routes/api.js'));
 
 
 app.listen(PORT, () => {

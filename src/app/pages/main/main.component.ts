@@ -5,7 +5,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { MinecoApiService } from '@core/services/mineco-api.service';
+import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-main',
@@ -16,11 +16,11 @@ import { MinecoApiService } from '@core/services/mineco-api.service';
 })
 export default class MainComponent implements OnInit {
   // Injections
-  private MinecoApiService = inject(MinecoApiService);
+  private apiService = inject(ApiService);
 
   // Methods
   async ngOnInit(): Promise<void> {
-    const response = await this.MinecoApiService.test();
+    const response = await this.apiService.test();
     console.log(response);
   }
 }

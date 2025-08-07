@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginBody, LoginResponse } from '@shared/models/login-fetch.types';
-import { MinecoApiService } from '@core/services/mineco-api.service';
+import { ApiService } from '@core/services/api.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { RefreshTokenResponse } from '@shared/models/refresh-token-fetch.types';
 
@@ -11,14 +11,14 @@ import { RefreshTokenResponse } from '@shared/models/refresh-token-fetch.types';
 export class LoginService {
   // Injections
   private router = inject(Router);
-  private minecoApiService = inject(MinecoApiService);
+  private apiService = inject(ApiService);
 
   // Data
   public userData = signal<LoginResponse | null>(null);
 
   // Methods
   public async login(credentials: LoginBody): Promise<void> {
-    const response = await this.minecoApiService.login(credentials);
+    const response = await this.apiService.login(credentials);
     localStorage.setItem('userData', JSON.stringify(response));
     this.userData.set(response);
     this.router.navigate(['/main']);
@@ -37,7 +37,7 @@ export class LoginService {
 
     const userData: LoginResponse = JSON.parse(storedUserData!);
 
-    return this.minecoApiService.refreshToken(userData.refreshToken).pipe(
+    return this.apiService.refreshToken(userData.refreshToken).pipe(
       tap((response) => {
         const updatedUserData = {
           ...userData,

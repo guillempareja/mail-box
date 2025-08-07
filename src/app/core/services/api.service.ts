@@ -16,7 +16,7 @@ import { TestResponse } from '@shared/models/test-fetch.types';
 @Injectable({
   providedIn: 'root',
 })
-export class MinecoApiService {
+export class ApiService {
   // Injections
   private http = inject(HttpClient);
 

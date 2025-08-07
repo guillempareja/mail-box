@@ -5,7 +5,7 @@ const {
   login,
   refreshToken,
   test,
-} = require('../controllers/mineco-api');
+} = require('../controllers/api');
 
 router.post('/login', login);
 router.post('/refreshToken', refreshToken);

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  minecoApi: 'https://ingest-buzones.seg-social-innova.es',
+  api: 'https://ingest-buzones.seg-social-innova.es',
 };
