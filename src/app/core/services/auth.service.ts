@@ -1,9 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginBody, LoginResponse } from '@shared/models/login-fetch.types';
+import { LoginBody, LoginResponse } from '@shared/models/login.types';
 import { ApiService } from '@core/services/api.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { RefreshTokenResponse } from '@shared/models/refresh-token-fetch.types';
+import { RefreshTokenResponse } from '@shared/models/refresh-token.types';
 
 @Injectable({
   providedIn: 'root',

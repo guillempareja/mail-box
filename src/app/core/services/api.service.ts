@@ -1,17 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
-import {
-  LoginBody,
-  LoginResponse,
-  Token,
-} from '@shared/models/login-fetch.types';
+import { LoginBody, LoginResponse, Token } from '@shared/models/login.types';
 import { CustomHeader } from '@shared/enums/custom-headers.enum';
 import {
   RefreshTokenBody,
   RefreshTokenResponse,
-} from '@shared/models/refresh-token-fetch.types';
-import { TestResponse } from '@shared/models/test-fetch.types';
+} from '@shared/models/refresh-token.types';
+import { TestResponse } from '@shared/models/test.types';
 
 @Injectable({
   providedIn: 'root',

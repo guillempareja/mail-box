@@ -1,4 +1,4 @@
-import { Token } from './login-fetch.types';
+import { Token } from './login.types';
 
 export type RefreshTokenBody = {
   refreshToken: Token;
