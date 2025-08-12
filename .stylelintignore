@@ -1,0 +1,2 @@
+# Ignore normalize.scss (third-party file)
+src/styles/base/_normalize.scss

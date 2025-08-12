@@ -2,5 +2,6 @@
 
 @function rem($size) {
   $remValue: math.div($size, 16);
+
   @return #{$remValue}rem;
 }

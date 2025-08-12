@@ -1,5 +1,5 @@
 const testMock = {
-  "test": "test"
+  test: 'test',
 };
 
 module.exports = {

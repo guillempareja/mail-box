@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 /**
  * Recursively removes empty properties from plain objects or arrays.
  * Leaves intact any non–plain-object instances (Date, RegExp, custom classes…).

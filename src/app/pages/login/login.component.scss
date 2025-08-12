@@ -6,6 +6,7 @@
 
 .box {
   @include flex-center;
+
   flex-direction: column;
 }
 

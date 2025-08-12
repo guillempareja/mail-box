@@ -1,11 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const {
-  login,
-  refreshToken,
-  test,
-} = require('../controllers/api');
+const { login, refreshToken, test } = require('../controllers/api');
 
 router.post('/login', login);
 router.post('/refreshToken', refreshToken);
