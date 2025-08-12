@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
+import { ErrorMessagePipe } from '@shared/pipes/error-message.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
 import { AuthService } from '@core/services/auth.service';
 import { FormService } from '@shared/services/form.service';
@@ -25,6 +26,7 @@ import { sleep } from '@shared/utils/delay.utils';
     ReactiveFormsModule,
     IsInvalidControlPipe,
     TranslatePipe,
+    ErrorMessagePipe,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

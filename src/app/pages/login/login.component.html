@@ -14,7 +14,7 @@
         formControlName="username"
       />
       <div *ngIf="form | isInvalidControl: 'username'" class="invalid-feedback">
-        {{ 'form.requiredError' | translate }}
+        {{ form.get('username')! | errorMessage }}
       </div>
     </div>
 
@@ -30,7 +30,7 @@
         formControlName="password"
       />
       <div *ngIf="form | isInvalidControl: 'password'" class="invalid-feedback">
-        {{ 'form.requiredError' | translate }}
+        {{ form.get('password')! | errorMessage }}
       </div>
     </div>
   </div>

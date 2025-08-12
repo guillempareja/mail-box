@@ -1,13 +1,13 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ValidationErrorKey } from '@shared/enums/validation-error-keys.enum';
 
-const DEFAULT_ERROR_MESSAGES: Record<string, string> = {
-  [ValidationErrorKey.REQUIRED]: 'Campo obligatorio',
-  // add more common validation keys and default messages here
-};
 @Pipe({ name: 'errorMessage', standalone: true, pure: false })
 export class ErrorMessagePipe implements PipeTransform {
+  // Injects
+  private translate = inject(TranslateService);
+
   /**
    * Returns an error message based on the first error found among one or more controls.
    * - Accepts a single AbstractControl or an array of them.
@@ -46,9 +46,16 @@ export class ErrorMessagePipe implements PipeTransform {
       return '';
     }
 
+    // Get default error messages from i18n
+    const getDefaultErrorMessages = (): Record<string, string> => ({
+      [ValidationErrorKey.REQUIRED]:
+        this.translate.instant('form.requiredError'),
+      // add more common validation keys and default messages here
+    });
+
     // Merge default messages with any custom errorMessages
     const allMessages: Record<string, string> = {
-      ...DEFAULT_ERROR_MESSAGES,
+      ...getDefaultErrorMessages(),
       ...errorMessages,
     };
 
@@ -66,6 +73,6 @@ export class ErrorMessagePipe implements PipeTransform {
     }
 
     // Generic fallback message
-    return 'Campo inválido';
+    return this.translate.instant('form.invalidFieldError');
   }
 }
