@@ -11,6 +11,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IsInvalidControlPipe } from '@shared/pipes/is-invalid-control.pipe';
 import { markAllControlsAsTouched } from '@shared/utils/form.utils';
 import { AuthService } from '@core/services/auth.service';
@@ -19,7 +20,12 @@ import { sleep } from '@shared/utils/delay.utils';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, IsInvalidControlPipe],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    IsInvalidControlPipe,
+    TranslatePipe,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

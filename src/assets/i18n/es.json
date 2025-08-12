@@ -19,6 +19,14 @@
     "invalidFieldError": "Campo inválido",
     "requiredError": "Campo obligatorio"
   },
+  "login": {
+    "title": "Acceso",
+    "usernameLabel": "Usuario",
+    "usernamePlaceholder": "Introduce tu usuario",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "submitButton": "Acceder"
+  },
   "main": {
     "welcomeMessage": "¡Hola! Bienvenido a la aplicación de migraciones"
   },
