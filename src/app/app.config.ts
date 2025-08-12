@@ -10,6 +10,8 @@ import {
 import { routes } from './app.routes';
 import { provideHttpCache, withHttpCacheInterceptor } from '@ngneat/cashew';
 import { customHttpInterceptor } from '@core/interceptors/http.interceptor';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +32,13 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpCache(),
     { provide: LOCALE_ID, useValue: 'es-ES' },
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      }),
+      fallbackLang: 'es',
+      lang: 'es',
+    }),
   ],
 };

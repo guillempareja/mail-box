@@ -8,10 +8,12 @@ import {
   output,
   viewChild,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { createFocusTrap, FocusTrap } from 'focus-trap';
 
 @Component({
   selector: 'modal',
+  imports: [TranslatePipe],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

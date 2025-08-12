@@ -1,0 +1,28 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "accept": "Aceptar"
+  },
+  "httpRequest": {
+    "error": {
+      "customError": "Este es un error de prueba con mensaje custom del backend",
+      "sessionExpired": "La sesión ha expirado",
+      "default": "Se ha producido un error"
+    },
+    "success": {
+      "customSuccess": "Esta es una respuesta de éxito custom",
+      "default": "Operación realizada con éxito"
+    }
+  },
+  "form": {
+    "globalError": "Por favor, corrige los errores del formulario",
+    "invalidFieldError": "Campo inválido",
+    "requiredError": "Campo obligatorio"
+  },
+  "main": {
+    "welcomeMessage": "¡Hola! Bienvenido a la aplicación de migraciones"
+  },
+  "globalLoader": {
+    "loading": "Cargando..."
+  }
+}

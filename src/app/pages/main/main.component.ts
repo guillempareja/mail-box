@@ -5,11 +5,12 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

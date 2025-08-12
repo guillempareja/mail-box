@@ -27,9 +27,9 @@
     <!-- Modal Footer -->
     <div class="footer">
       @if (!acceptOnly()) {
-        <button (click)="close()">Cancelar</button>
+        <button (click)="close()">{{ 'common.cancel' | translate }}</button>
       }
-      <button (click)="onConfirm()">Aceptar</button>
+      <button (click)="onConfirm()">{{ 'common.accept' | translate }}</button>
     </div>
   </div>
 }

@@ -4,22 +4,36 @@ import {
   HttpHandlerFn,
   HttpEvent,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, catchError, finalize, switchMap, throwError } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  finalize,
+  switchMap,
+  throwError,
+  tap,
+  filter,
+} from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoaderService } from '@core/services/loader.service';
 import { AuthService } from '@core/services/auth.service';
-import { CustomHeader } from '@shared/enums/custom-headers.enum';
+import { HttpResponseHandlerService } from '@core/services/http-response-handler.service';
+import { HttpCustomHeader } from '@shared/enums/http-custom-headers.enum';
 
 export const customHttpInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
-  const toastr = inject(ToastrService);
+  // Skip interceptor for translation files to avoid circular dependency
+  if (req.url.includes('/assets/i18n/')) {
+    return next(req);
+  }
+
   const loaderService = inject(LoaderService);
   const authService = inject(AuthService);
+  const responseHandler = inject(HttpResponseHandlerService);
 
   const headers: Record<string, string> = {};
   if (authService.userData()) {
@@ -32,13 +46,13 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   });
 
   let shouldShowLoader = false;
-  if (req.headers.get(CustomHeader.SHOW_LOADER) === 'true') {
+  if (req.headers.get(HttpCustomHeader.SHOW_LOADER) !== 'false') {
     shouldShowLoader = true;
     loaderService.show();
   }
 
   const handleSessionExpired = () => {
-    toastr.error('La sesión ha expirado');
+    responseHandler.handleSessionExpired();
     authService.logout();
   };
 
@@ -62,20 +76,38 @@ export const customHttpInterceptor: HttpInterceptorFn = (
   };
 
   return next(modifiedReq).pipe(
+    filter(
+      (event): event is HttpResponse<unknown> => event instanceof HttpResponse,
+    ),
+    tap(() => {
+      // Check for default success message header
+      if (
+        req.headers.get(HttpCustomHeader.SHOW_DEFAULT_SUCCESS_MESSAGE) ===
+        'true'
+      ) {
+        responseHandler.handleSuccessResponse();
+        return;
+      }
+
+      // Check for custom success message header
+      const customSuccessTag = req.headers.get(
+        HttpCustomHeader.CUSTOM_SUCCESS_MESSAGE,
+      );
+      if (customSuccessTag) {
+        responseHandler.handleSuccessResponse(customSuccessTag);
+      }
+    }),
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        if (req.url === '/login') {
-          toastr.error('Usuario o contraseña incorrectos');
-          return throwError(() => new Error(error.message));
-        } else if (req.url === '/refreshToken') {
+        if (req.url === '/refreshToken') {
           handleSessionExpired();
           return throwError(() => new Error(error.message));
-        } else {
+        } else if (req.url !== '/login') {
           return refreshTokenAndRefetch();
         }
       }
 
-      toastr.error('Se ha producido un error');
+      responseHandler.handleHttpError(error);
       return throwError(() => new Error(error.message));
     }),
     finalize(() => {

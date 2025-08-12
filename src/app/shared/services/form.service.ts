@@ -1,10 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class FormService {
   // Injections
   private toastr = inject(ToastrService);
+  private translate = inject(TranslateService);
 
   // Methods
   navigateToFormError(): void {
@@ -16,7 +18,7 @@ export class FormService {
         block: 'center',
       });
 
-      this.toastr.error('Por favor, corrige los errores del formulario');
+      this.toastr.error(this.translate.instant('form.globalError'));
     }
   }
 }
