@@ -13,9 +13,11 @@
         [value]="form.get('username')?.value"
         formControlName="username"
       />
-      <div *ngIf="form | isInvalidControl: 'username'" class="invalid-feedback">
-        {{ form.get('username')! | errorMessage }}
-      </div>
+      @if (form | isInvalidControl: 'username') {
+        <div class="invalid-feedback">
+          {{ form.get('username')! | errorMessage }}
+        </div>
+      }
     </div>
 
     <!-- Password -->
@@ -29,9 +31,11 @@
         [value]="form.get('password')?.value"
         formControlName="password"
       />
-      <div *ngIf="form | isInvalidControl: 'password'" class="invalid-feedback">
-        {{ form.get('password')! | errorMessage }}
-      </div>
+      @if (form | isInvalidControl: 'password') {
+        <div class="invalid-feedback">
+          {{ form.get('password')! | errorMessage }}
+        </div>
+      }
     </div>
   </div>
 
