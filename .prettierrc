@@ -6,6 +6,5 @@
     "useTabs": false,
     "proseWrap": "always",
     "bracketSpacing": true,
-    "endOfLine": "auto",
-    "insertFinalNewline": true
+    "endOfLine": "auto"
 }
