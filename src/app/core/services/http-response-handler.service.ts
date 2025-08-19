@@ -24,12 +24,12 @@ export class HttpResponseHandlerService {
   }
 
   /**
-   * Handles session expired errors
+   * Handles HTTP warnings and shows translated messages
+   * @param error - HTTP warning received
    */
-  handleSessionExpired(): void {
-    this.toastr.error(
-      this.translate.instant('httpRequest.error.sessionExpired'),
-    );
+  handleHttpWarning(warningTag: string): void {
+    const message = this.translateServerMessage(warningTag, 'warning');
+    this.toastr.warning(message);
   }
 
   /**
@@ -42,6 +42,15 @@ export class HttpResponseHandlerService {
   }
 
   /**
+   * Handles session expired errors
+   */
+  handleSessionExpired(): void {
+    this.toastr.error(
+      this.translate.instant('httpRequest.error.sessionExpired'),
+    );
+  }
+
+  /**
    * Translates a tag from server using i18n
    * @param tag - Tag sent by server
    * @param type - Type of message (error or success)
@@ -49,7 +58,7 @@ export class HttpResponseHandlerService {
    */
   private translateServerMessage(
     tag: string,
-    type: 'error' | 'success' = 'error',
+    type: 'error' | 'success' | 'warning' = 'error',
   ): string {
     const translationKey = `httpRequest.${type}.${tag}`;
     const translatedMessage = this.translate.instant(translationKey);

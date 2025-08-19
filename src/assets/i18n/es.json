@@ -5,13 +5,16 @@
   },
   "httpRequest": {
     "error": {
-      "customError": "Este es un error de prueba con mensaje custom del backend",
-      "sessionExpired": "La sesión ha expirado",
-      "default": "Se ha producido un error"
+      "customError": "Este es un error de prueba con mensaje custom del backend.",
+      "sessionExpired": "La sesión ha expirado.",
+      "default": "Se ha producido un error."
+    },
+    "warning": {
+      "customWarning": "Esta es una alerta de prueba con mensaje custom del backend."
     },
     "success": {
-      "customSuccess": "Esta es una respuesta de éxito custom",
-      "default": "Operación realizada con éxito"
+      "customSuccess": "Esta es una respuesta de éxito custom.",
+      "default": "Operación realizada con éxito."
     }
   },
   "form": {

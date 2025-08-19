@@ -1,5 +1,6 @@
 export enum HttpCustomHeader {
-  SHOW_LOADER = 'X-Show-Loader',
-  SHOW_DEFAULT_SUCCESS_MESSAGE = 'X-Show-Default-Success-Message',
-  CUSTOM_SUCCESS_MESSAGE = 'X-Custom-Success-Message',
+  SHOW_LOADER = 'App-Show-Loader',
+  SHOW_DEFAULT_SUCCESS_MESSAGE = 'App-Show-Default-Success-Message',
+  CUSTOM_SUCCESS_MESSAGE = 'App-Custom-Success-Message',
+  CUSTOM_WARNING_MESSAGE = 'Back-Custom-Warning-Message',
 }

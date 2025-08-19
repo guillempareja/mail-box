@@ -15,6 +15,13 @@ const test = async (req, res = response) => {
     return res.status(401).json();
   }
 
+  //  Expose and set backend warning header
+  res.setHeader('Access-Control-Expose-Headers', 'Back-Custom-Warning-Message');
+  res.setHeader('Back-Custom-Warning-Message', 'customWarning');
+
+  // Prevent browser caching this response
+  res.setHeader('Cache-Control', 'no-store');
+
   await delay();
   res.json(testMock);
 };

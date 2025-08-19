@@ -79,7 +79,16 @@ export const customHttpInterceptor: HttpInterceptorFn = (
     filter(
       (event): event is HttpResponse<unknown> => event instanceof HttpResponse,
     ),
-    tap(() => {
+    tap((res: HttpResponse<unknown>) => {
+      // Check for backend warning message header (from response)
+      const warningTag = res.headers.get(
+        HttpCustomHeader.CUSTOM_WARNING_MESSAGE,
+      );
+      if (warningTag) {
+        responseHandler.handleHttpWarning(warningTag);
+        return;
+      }
+
       // Check for default success message header
       if (
         req.headers.get(HttpCustomHeader.SHOW_DEFAULT_SUCCESS_MESSAGE) ===
