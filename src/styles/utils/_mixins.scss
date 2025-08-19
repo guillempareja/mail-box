@@ -37,10 +37,10 @@
   text-overflow: ellipsis;
 }
 
-@mixin fadeIn($duration: $transition-speed, $easing: ease-in-out) {
-  animation: fadeIn $duration $easing;
+@mixin fade-in($duration: $transition-speed, $easing: ease-in-out) {
+  animation: fade-in $duration $easing;
 
-  @keyframes fadeIn {
+  @keyframes fade-in {
     from {
       opacity: 0;
     }
