@@ -7,5 +7,6 @@ module.exports = {
       { except: ['first-nested'], ignore: ['after-comment'] },
     ],
     'length-zero-no-unit': true,
+    'no-empty-source': null,
   },
 };
