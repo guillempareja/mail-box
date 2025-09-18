@@ -9,7 +9,7 @@ Este proyecto es un **template base** diseñado para ser reutilizado como punto 
 - **Angular 20** con standalone components
 - **Signals** para manejo de estado reactivo
 - **Arquitectura modular** (Core/Shared/Pages)
-- **Backend fake** con Express.js para desarrollo
+- **MockServiceWorker (MSW)** para desarrollo y testing
 - **HTTP Interceptors** completos (auth, loading, errors)
 - **SCSS organizado** con metodología ITCSS
 - **TypeScript** con tipado fuerte
@@ -99,14 +99,11 @@ src/styles/
 # Instalar dependencias
 npm install
 
-# Ejecutar en modo desarrollo (frontend + backend fake)
+# Ejecutar en modo desarrollo (con MSW)
 npm start
 
-# Solo frontend
-ng serve
-
-# Solo backend fake
-npm run api
+# Ejecutar con environment de test
+npm run start:tst
 
 # Tests
 npm test
@@ -117,8 +114,7 @@ npm run build
 
 ### URLs de Desarrollo
 - **Frontend**: http://localhost:4200
-- **Backend Fake**: http://localhost:4000
-- **API Endpoints**: http://localhost:4000/api
+- **Mock API**: Interceptado por MockServiceWorker
 
 ## 🎯 Funcionalidades del Template
 
@@ -264,8 +260,7 @@ npm run test:coverage      # Con coverage
 - **lodash**: Utilidades de JavaScript
 
 ### Development
-- **concurrently**: Ejecutar frontend + backend
-- **express**: Backend fake
+- **msw**: MockServiceWorker para interceptar requests
 - **prettier**: Formateo de código
 - **eslint**: Linting
 

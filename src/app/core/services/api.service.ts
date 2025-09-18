@@ -7,7 +7,10 @@ import {
   RefreshTokenBody,
   RefreshTokenResponse,
 } from '@shared/models/refresh-token.types';
-import { TestResponse } from '@shared/models/test.types';
+import {
+  ExampleDocumentResponse,
+  ExampleResponse,
+} from '@shared/models/example.types';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +20,9 @@ export class ApiService {
   private http = inject(HttpClient);
 
   // Methods
-  public test(): Promise<TestResponse> {
+  public getExample(): Promise<ExampleResponse> {
     return firstValueFrom(
-      this.http.get<TestResponse>('/test', {
+      this.http.get<ExampleResponse>('/example', {
         headers: {
           [HttpCustomHeader.CUSTOM_SUCCESS_MESSAGE]: 'customSuccess',
         },
@@ -34,5 +37,13 @@ export class ApiService {
   public refreshToken(refreshToken: Token): Observable<RefreshTokenResponse> {
     const body: RefreshTokenBody = { refreshToken };
     return this.http.post<RefreshTokenResponse>('/refreshToken', body);
+  }
+
+  public getExampleDocument(): Promise<ExampleDocumentResponse> {
+    return firstValueFrom(
+      this.http.get('/example/document', {
+        responseType: 'blob',
+      }),
+    );
   }
 }

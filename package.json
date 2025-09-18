@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"ng serve\" \"nodemon api\"",
+    "start": "ng serve",
     "start:tst": "ng serve --configuration=tst",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md,html}\" \"api/**/*.{js,json}\" && stylelint \"src/**/*.{css,scss}\" --fix"
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md,html}\" && stylelint \"src/**/*.{css,scss}\" --fix"
   },
   "private": true,
   "dependencies": {
@@ -44,12 +44,10 @@
     "@types/lodash": "^4.17.13",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
-    "concurrently": "^9.1.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsonc": "^2.20.1",
     "eslint-plugin-prettier": "^5.5.4",
-    "express": "^4.17.1",
     "jasmine-core": "~5.1.0",
     "jsonc-eslint-parser": "^2.4.0",
     "karma": "~6.4.0",
@@ -57,12 +55,17 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "nodemon": "^2.0.7",
+    "msw": "^2.11.2",
     "prettier": "^3.6.2",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-config-standard-scss": "^15.0.1",
     "stylelint-prettier": "^5.0.3",
     "typescript": "~5.8.3"
+  },
+  "msw": {
+    "workerDirectory": [
+      "src/fake-backend"
+    ]
   }
 }

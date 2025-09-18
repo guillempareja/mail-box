@@ -21,7 +21,7 @@ export default class MainComponent implements OnInit {
 
   // Methods
   async ngOnInit(): Promise<void> {
-    const response = await this.apiService.test();
+    const response = await this.apiService.getExample();
     console.log(response);
   }
 }
