@@ -20,7 +20,17 @@
   "form": {
     "globalError": "Por favor, corrige los errores del formulario",
     "invalidFieldError": "Campo inválido",
-    "requiredError": "Campo obligatorio"
+    "requiredError": "Campo obligatorio",
+    "dniInvalidError": "El DNI introducido no es válido",
+    "nieInvalidError": "El NIE introducido no es válido",
+    "dateNotBeforeTodayError": "La fecha no puede ser anterior a hoy",
+    "dateNotBeforeOrEqualTodayError": "La fecha no puede ser anterior o igual a hoy",
+    "dateNotAfterTodayError": "La fecha no puede ser posterior a hoy",
+    "dateNotAfterOrEqualTodayError": "La fecha no puede ser posterior o igual a hoy",
+    "maxLengthError": "Máximo {{max}} caracteres",
+    "minLengthError": "Mínimo {{min}} caracteres",
+    "exactLengthError": "Debe tener exactamente {{length}} caracteres",
+    "numericError": "Debe ser un valor numérico"
   },
   "login": {
     "title": "Acceso",

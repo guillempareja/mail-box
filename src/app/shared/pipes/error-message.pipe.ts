@@ -1,12 +1,28 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ValidationErrorKey } from '@shared/enums/validation-error-keys.enum';
+import { ValidationErrorKey } from '../enums/validation-error-keys.enum';
 
 @Pipe({ name: 'errorMessage', standalone: true, pure: false })
 export class ErrorMessagePipe implements PipeTransform {
-  // Injects
+  // Injections
   private translate = inject(TranslateService);
+
+  /**
+   * Extracts interpolation parameters from error value if it's a valid object
+   */
+  private extractInterpolationParams(
+    errorValue: unknown,
+  ): Record<string, unknown> | undefined {
+    if (
+      typeof errorValue === 'object' &&
+      errorValue !== null &&
+      !Array.isArray(errorValue)
+    ) {
+      return errorValue as Record<string, unknown>;
+    }
+    return undefined;
+  }
 
   /**
    * Returns an error message based on the first error found among one or more controls.
@@ -15,6 +31,7 @@ export class ErrorMessagePipe implements PipeTransform {
    * - Uses default messages for known keys unless overridden by errorMessages.
    * - Tries exact key match first, then substring match (case-insensitive).
    * - Falls back to a generic message if no matches found.
+   * - Supports parameter interpolation for dynamic values (e.g., maxLength).
    *
    * @param controls      One control or an array of controls to inspect.
    * @param errorMessages Optional overrides e.g. { email: 'Correo inválido' }.
@@ -34,10 +51,15 @@ export class ErrorMessagePipe implements PipeTransform {
 
     // Find first control that has errors
     let errorKey: string | undefined;
+    let interpolationParams: Record<string, unknown> | undefined;
+
     for (const control of list) {
       const keys = control.errors ? Object.keys(control.errors) : [];
       if (keys.length) {
         errorKey = keys[0];
+        interpolationParams = this.extractInterpolationParams(
+          control.errors![errorKey],
+        );
         break;
       }
     }
@@ -50,6 +72,35 @@ export class ErrorMessagePipe implements PipeTransform {
     const getDefaultErrorMessages = (): Record<string, string> => ({
       [ValidationErrorKey.REQUIRED]:
         this.translate.instant('form.requiredError'),
+      [ValidationErrorKey.DNI_INVALID]: this.translate.instant(
+        'form.dniInvalidError',
+      ),
+      [ValidationErrorKey.NIE_INVALID]: this.translate.instant(
+        'form.nieInvalidError',
+      ),
+      [ValidationErrorKey.DATE_NOT_BEFORE_TODAY]: this.translate.instant(
+        'form.dateNotBeforeTodayError',
+      ),
+      [ValidationErrorKey.DATE_NOT_BEFORE_OR_EQUAL_TODAY]:
+        this.translate.instant('form.dateNotBeforeOrEqualTodayError'),
+      [ValidationErrorKey.DATE_NOT_AFTER_TODAY]: this.translate.instant(
+        'form.dateNotAfterTodayError',
+      ),
+      [ValidationErrorKey.DATE_NOT_AFTER_OR_EQUAL_TODAY]:
+        this.translate.instant('form.dateNotAfterOrEqualTodayError'),
+      [ValidationErrorKey.MAX_LENGTH]: this.translate.instant(
+        'form.maxLengthError',
+        interpolationParams,
+      ),
+      [ValidationErrorKey.MIN_LENGTH]: this.translate.instant(
+        'form.minLengthError',
+        interpolationParams,
+      ),
+      [ValidationErrorKey.EXACT_LENGTH]: this.translate.instant(
+        'form.exactLengthError',
+        interpolationParams,
+      ),
+      [ValidationErrorKey.NUMERIC]: this.translate.instant('form.numericError'),
       // add more common validation keys and default messages here
     });
 
