@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { ValidationErrorKey } from '@shared/enums/validation-error-keys.enum';
 
 /**
  * Validates NIE (Número de Identificación de Extranjero) format
@@ -18,7 +17,7 @@ export function nieValidator(): ValidatorFn {
     const nieRegex = /^[XYZ]\d{7}[A-Z]$/;
 
     if (!nieRegex.test(nieValue)) {
-      return { [ValidationErrorKey.NIE_INVALID]: true };
+      return { nieInvalid: { translationTag: 'form.nieInvalidError' } };
     }
 
     // Additional validation: check control digit
@@ -37,7 +36,7 @@ export function nieValidator(): ValidatorFn {
     const actualLetter = nieValue.charAt(8);
 
     if (actualLetter !== expectedLetter) {
-      return { [ValidationErrorKey.NIE_INVALID]: true };
+      return { nieInvalid: { translationTag: 'form.nieInvalidError' } };
     }
 
     return null;
@@ -60,7 +59,7 @@ export function dniValidator(): ValidatorFn {
     const dniRegex = /^\d{8}[A-Z]$/;
 
     if (!dniRegex.test(dniValue)) {
-      return { [ValidationErrorKey.DNI_INVALID]: true };
+      return { dniInvalid: { translationTag: 'form.dniInvalidError' } };
     }
 
     // Validate control digit
@@ -72,7 +71,7 @@ export function dniValidator(): ValidatorFn {
     const expectedLetter = controlLetters.charAt(remainder);
 
     if (letter !== expectedLetter) {
-      return { [ValidationErrorKey.DNI_INVALID]: true };
+      return { dniInvalid: { translationTag: 'form.dniInvalidError' } };
     }
 
     return null;

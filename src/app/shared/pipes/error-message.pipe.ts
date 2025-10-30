@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ValidationErrorKey } from '../enums/validation-error-keys.enum';
 
 @Pipe({ name: 'errorMessage', standalone: true, pure: false })
 export class ErrorMessagePipe implements PipeTransform {
@@ -9,32 +8,25 @@ export class ErrorMessagePipe implements PipeTransform {
   private translate = inject(TranslateService);
 
   /**
-   * Extracts interpolation parameters from error value if it's a valid object
+   * Angular native validators that need translation
+   * Add more Angular native validations here (email, min, max, pattern, etc.)
    */
-  private extractInterpolationParams(
-    errorValue: unknown,
-  ): Record<string, unknown> | undefined {
-    if (
-      typeof errorValue === 'object' &&
-      errorValue !== null &&
-      !Array.isArray(errorValue)
-    ) {
-      return errorValue as Record<string, unknown>;
-    }
-    return undefined;
-  }
+  private readonly ANGULAR_NATIVE_VALIDATORS: Record<string, string> = {
+    required: 'form.requiredError',
+    // Add more as needed: email, min, max, pattern, minlength, maxlength, etc.
+  };
 
   /**
    * Returns an error message based on the first error found among one or more controls.
    * - Accepts a single AbstractControl or an array of them.
    * - Finds the first control that has an error and retrieves its first error key.
-   * - Uses default messages for known keys unless overridden by errorMessages.
-   * - Tries exact key match first, then substring match (case-insensitive).
-   * - Falls back to a generic message if no matches found.
-   * - Supports parameter interpolation for dynamic values (e.g., maxLength).
+   * - For Angular native validators (like 'required'), translates using i18n.
+   * - For custom validators with objects containing 'translationTag', translates them.
+   * - If errorValue is a plain string, returns it directly (for custom overrides from parent).
+   * - Supports custom error messages passed as parameter that override defaults.
    *
    * @param controls      One control or an array of controls to inspect.
-   * @param errorMessages Optional overrides e.g. { email: 'Correo inválido' }.
+   * @param errorMessages Optional overrides e.g. { required: 'Este campo es obligatorio' }.
    */
   transform(
     controls: AbstractControl | AbstractControl[],
@@ -51,15 +43,13 @@ export class ErrorMessagePipe implements PipeTransform {
 
     // Find first control that has errors
     let errorKey: string | undefined;
-    let interpolationParams: Record<string, unknown> | undefined;
+    let errorValue: unknown;
 
     for (const control of list) {
       const keys = control.errors ? Object.keys(control.errors) : [];
       if (keys.length) {
         errorKey = keys[0];
-        interpolationParams = this.extractInterpolationParams(
-          control.errors![errorKey],
-        );
+        errorValue = control.errors![errorKey];
         break;
       }
     }
@@ -68,59 +58,35 @@ export class ErrorMessagePipe implements PipeTransform {
       return '';
     }
 
-    // Get default error messages from i18n
-    const getDefaultErrorMessages = (): Record<string, string> => ({
-      [ValidationErrorKey.REQUIRED]:
-        this.translate.instant('form.requiredError'),
-      [ValidationErrorKey.DNI_INVALID]: this.translate.instant(
-        'form.dniInvalidError',
-      ),
-      [ValidationErrorKey.NIE_INVALID]: this.translate.instant(
-        'form.nieInvalidError',
-      ),
-      [ValidationErrorKey.DATE_NOT_BEFORE_TODAY]: this.translate.instant(
-        'form.dateNotBeforeTodayError',
-      ),
-      [ValidationErrorKey.DATE_NOT_BEFORE_OR_EQUAL_TODAY]:
-        this.translate.instant('form.dateNotBeforeOrEqualTodayError'),
-      [ValidationErrorKey.DATE_NOT_AFTER_TODAY]: this.translate.instant(
-        'form.dateNotAfterTodayError',
-      ),
-      [ValidationErrorKey.DATE_NOT_AFTER_OR_EQUAL_TODAY]:
-        this.translate.instant('form.dateNotAfterOrEqualTodayError'),
-      [ValidationErrorKey.MAX_LENGTH]: this.translate.instant(
-        'form.maxLengthError',
-        interpolationParams,
-      ),
-      [ValidationErrorKey.MIN_LENGTH]: this.translate.instant(
-        'form.minLengthError',
-        interpolationParams,
-      ),
-      [ValidationErrorKey.EXACT_LENGTH]: this.translate.instant(
-        'form.exactLengthError',
-        interpolationParams,
-      ),
-      [ValidationErrorKey.NUMERIC]: this.translate.instant('form.numericError'),
-      // add more common validation keys and default messages here
-    });
-
-    // Merge default messages with any custom errorMessages
-    const allMessages: Record<string, string> = {
-      ...getDefaultErrorMessages(),
-      ...errorMessages,
-    };
-
-    // Exact match takes priority
-    if (allMessages[errorKey]) {
-      return allMessages[errorKey];
+    // Check if there's a custom error message override
+    if (errorMessages[errorKey]) {
+      return errorMessages[errorKey];
     }
 
-    // Otherwise check for substring match (case-insensitive)
-    const lowerKey = errorKey.toLowerCase();
-    for (const msgKey of Object.keys(allMessages)) {
-      if (lowerKey.includes(msgKey.toLowerCase())) {
-        return allMessages[msgKey];
-      }
+    // Handle Angular native validators (translate from i18n)
+    if (this.ANGULAR_NATIVE_VALIDATORS[errorKey]) {
+      return this.translate.instant(this.ANGULAR_NATIVE_VALIDATORS[errorKey]);
+    }
+
+    // If errorValue is a plain string, return it directly (custom message from parent)
+    if (typeof errorValue === 'string') {
+      return errorValue;
+    }
+
+    // For custom validators with object containing translationTag and optional interpolationParams
+    if (
+      typeof errorValue === 'object' &&
+      errorValue !== null &&
+      'translationTag' in errorValue
+    ) {
+      const errorObj = errorValue as {
+        translationTag: string;
+        interpolationParams?: Record<string, unknown>;
+      };
+      return this.translate.instant(
+        errorObj.translationTag,
+        errorObj.interpolationParams,
+      );
     }
 
     // Generic fallback message

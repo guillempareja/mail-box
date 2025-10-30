@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { ValidationErrorKey } from '@shared/enums/validation-error-keys.enum';
 import { isDateAfter, isDateBefore } from '@shared/utils/dates.utils';
 import { isValid } from 'date-fns';
 
@@ -36,7 +35,9 @@ export function dateNotBeforeTodayValidator(): ValidatorFn {
 
     // Use isDateBefore with includeEqual=false to check if date is strictly before today
     if (isDateBefore(inputDate, today, false)) {
-      return { [ValidationErrorKey.DATE_NOT_BEFORE_TODAY]: true };
+      return {
+        dateNotBeforeToday: { translationTag: 'form.dateNotBeforeTodayError' },
+      };
     }
 
     return null;
@@ -59,7 +60,11 @@ export function dateNotBeforeOrEqualTodayValidator(): ValidatorFn {
 
     // Use isDateBefore with includeEqual=true to check if date is before or equal to today
     if (isDateBefore(inputDate, today, true)) {
-      return { [ValidationErrorKey.DATE_NOT_BEFORE_OR_EQUAL_TODAY]: true };
+      return {
+        dateNotBeforeOrEqualToday: {
+          translationTag: 'form.dateNotBeforeOrEqualTodayError',
+        },
+      };
     }
 
     return null;
@@ -82,7 +87,9 @@ export function dateNotAfterTodayValidator(): ValidatorFn {
 
     // Use isDateAfter with includeEqual=false to check if date is strictly after today
     if (isDateAfter(inputDate, today, false)) {
-      return { [ValidationErrorKey.DATE_NOT_AFTER_TODAY]: true };
+      return {
+        dateNotAfterToday: { translationTag: 'form.dateNotAfterTodayError' },
+      };
     }
 
     return null;
@@ -105,7 +112,11 @@ export function dateNotAfterOrEqualTodayValidator(): ValidatorFn {
 
     // Use isDateAfter with includeEqual=true to check if date is after or equal to today
     if (isDateAfter(inputDate, today, true)) {
-      return { [ValidationErrorKey.DATE_NOT_AFTER_OR_EQUAL_TODAY]: true };
+      return {
+        dateNotAfterOrEqualToday: {
+          translationTag: 'form.dateNotAfterOrEqualTodayError',
+        },
+      };
     }
 
     return null;

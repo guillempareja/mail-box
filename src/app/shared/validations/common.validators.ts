@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { ValidationErrorKey } from '@shared/enums/validation-error-keys.enum';
 
 /**
  * Validates that the value is a valid number
@@ -21,7 +20,7 @@ export function numericValidator(): ValidatorFn {
     // Check if it's a valid number (not NaN and is numeric)
     if (isNaN(Number(value)) || isNaN(parseFloat(value))) {
       return {
-        [ValidationErrorKey.NUMERIC]: true,
+        numeric: { translationTag: 'form.numericError' },
       };
     }
 
@@ -49,7 +48,10 @@ export function exactLengthValidator(length: number): ValidatorFn {
 
     if (value.length !== length) {
       return {
-        [ValidationErrorKey.EXACT_LENGTH]: { length },
+        exactLength: {
+          translationTag: 'form.exactLengthError',
+          interpolationParams: { length },
+        },
       };
     }
 
@@ -77,7 +79,10 @@ export function maxLengthValidator(max: number): ValidatorFn {
 
     if (value.length > max) {
       return {
-        [ValidationErrorKey.MAX_LENGTH]: { max },
+        maxLength: {
+          translationTag: 'form.maxLengthError',
+          interpolationParams: { max },
+        },
       };
     }
 
@@ -105,7 +110,10 @@ export function minLengthValidator(min: number): ValidatorFn {
 
     if (value.length < min) {
       return {
-        [ValidationErrorKey.MIN_LENGTH]: { min },
+        minLength: {
+          translationTag: 'form.minLengthError',
+          interpolationParams: { min },
+        },
       };
     }
 
